@@ -1,0 +1,22 @@
+generated: '2026-07-17'
+method: searched
+source: openapi/anam-openapi-original.json + https://anam.ai/docs/api-reference/overview
+docs: https://anam.ai/docs/api-reference/overview
+summary:
+  types:
+  - http
+  scheme: bearer
+  model: >-
+    Two-step. A long-lived server API key (created in the Anam Lab dashboard) authenticates
+    all REST calls as `Authorization: Bearer <API_KEY>`. To open a client-side avatar session,
+    the API key is exchanged at POST /v1/auth/session-token for a short-lived signed session-token
+    JWT (valid ~1 hour) that the browser/mobile SDK uses to establish the WebRTC connection.
+  upload_alt: >-
+    Knowledge-document upload also accepts an X-Upload-Token header as an alternative to the
+    Bearer API key.
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/anam-openapi-original.json
