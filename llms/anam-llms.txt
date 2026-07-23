@@ -1,0 +1,138 @@
+# Anam
+
+## Docs
+
+- [create avatar](https://anam.ai/docs/api-reference/avatars/create-avatar.md): Create a new one-shot avatar from an image file or image URL. You can use either multipart/form-data with an image file, or JSON with an image URL.
+- [delete avatar](https://anam.ai/docs/api-reference/avatars/delete-avatar.md): Delete an avatar by ID. By default this is a soft delete: the avatar is hidden and can be restored. Pass `hard=true` to permanently purge the avatar and its stored assets (source image and generated versions). A hard delete cannot be undone and is intended for data-erasure requests; it also purges a…
+- [get avatar](https://anam.ai/docs/api-reference/avatars/get-avatar.md): Returns an avatar by ID
+- [list avatars](https://anam.ai/docs/api-reference/avatars/list-avatars.md): Returns a list of all avatars
+- [update avatar](https://anam.ai/docs/api-reference/avatars/update-avatar.md): Update an avatar by ID (only display name can be updated)
+- [create engine session](https://anam.ai/docs/api-reference/engine/create-engine-session.md): Start a live persona session.
+- [create knowledge group](https://anam.ai/docs/api-reference/knowledge/create-knowledge-group.md): Create a new knowledge group
+- [delete knowledge document](https://anam.ai/docs/api-reference/knowledge/delete-knowledge-document.md): Delete a document from a RAG group
+- [delete knowledge group](https://anam.ai/docs/api-reference/knowledge/delete-knowledge-group.md): Delete a RAG group
+- [get knowledge document](https://anam.ai/docs/api-reference/knowledge/get-knowledge-document.md): Get a single document by ID
+- [get knowledge document download](https://anam.ai/docs/api-reference/knowledge/get-knowledge-document-download.md): Get a presigned download URL for a knowledge document
+- [get knowledge group](https://anam.ai/docs/api-reference/knowledge/get-knowledge-group.md): Get a single RAG group by ID
+- [list knowledge group documents](https://anam.ai/docs/api-reference/knowledge/list-knowledge-group-documents.md): Get all documents in a RAG group
+- [list knowledge groups](https://anam.ai/docs/api-reference/knowledge/list-knowledge-groups.md): Returns a list of all knowledge groups for the organization
+- [search knowledge group](https://anam.ai/docs/api-reference/knowledge/search-knowledge-group.md): Search for similar content in a RAG group using vector similarity
+- [update knowledge document](https://anam.ai/docs/api-reference/knowledge/update-knowledge-document.md): Update a document (rename)
+- [update knowledge group](https://anam.ai/docs/api-reference/knowledge/update-knowledge-group.md): Update a RAG group
+- [upload knowledge group document](https://anam.ai/docs/api-reference/knowledge/upload-knowledge-group-document.md): Upload a document to a RAG group (Supports PDF, TXT, MD, DOCX, CSV up to 50MB). Authentication can be via API key (Bearer token) OR upload token (X-Upload-Token header).
+- [create llm](https://anam.ai/docs/api-reference/llms/create-llm.md): Create a new LLM configuration
+- [delete llm](https://anam.ai/docs/api-reference/llms/delete-llm.md): Delete an LLM configuration
+- [get llm](https://anam.ai/docs/api-reference/llms/get-llm.md): Get a specific LLM by ID
+- [list llms](https://anam.ai/docs/api-reference/llms/list-llms.md): Returns a list of all LLMs available to the organization
+- [update llm](https://anam.ai/docs/api-reference/llms/update-llm.md): Update an LLM configuration
+- [cancel meeting invite](https://anam.ai/docs/api-reference/meetings/cancel-meeting-invite.md): Cancel a pending meeting invite by ID for the authenticated organization.
+- [create meeting invite](https://anam.ai/docs/api-reference/meetings/create-meeting-invite.md): Invite a persona to join a Google Meet, Zoom, or Microsoft Teams meeting.
+- [get meeting invite](https://anam.ai/docs/api-reference/meetings/get-meeting-invite.md): Get a meeting invite by ID for the authenticated organization.
+- [list meeting invites](https://anam.ai/docs/api-reference/meetings/list-meeting-invites.md): List meeting invites for the authenticated organization, most recent first. Filter by `status` to find invites in a particular lifecycle state — for example `pending` invites that have not joined yet, or `active` invites currently in a call.
+- [Introduction](https://anam.ai/docs/api-reference/overview.md): Quick start for calling the Anam REST API directly.
+- [create persona](https://anam.ai/docs/api-reference/personas/create-persona.md): Create a new persona
+- [delete persona](https://anam.ai/docs/api-reference/personas/delete-persona.md): Delete a persona by id
+- [get persona](https://anam.ai/docs/api-reference/personas/get-persona.md): Returns a persona by id
+- [list personas](https://anam.ai/docs/api-reference/personas/list-personas.md): Returns a list of all personas
+- [update persona](https://anam.ai/docs/api-reference/personas/update-persona.md): Update a persona by id
+- [create session token](https://anam.ai/docs/api-reference/sessions/create-session-token.md): Create a new session token used to initialise Anam client side SDKs
+- [get aggregated session analytics](https://anam.ai/docs/api-reference/sessions/get-aggregated-session-analytics.md): Returns aggregated latency analytics across sessions — percentile distributions (p50/p90/p95/p99/max/avg) for each stage of the transcription → LLM → TTS → first-audio path, interruption and error rates, tool call outcomes, and a sample of the slowest turns. Only sessions where Anam runs the convers…
+- [get session concurrency status](https://anam.ai/docs/api-reference/sessions/get-current-concurrency-status.md): Returns the organization's concurrent-session limit, an approximate count of sessions currently in use, whether a new session can likely be started, and an estimated wait time until a slot frees. Intended as an advisory pre-check before starting a session (e.g. to gate a "Start" button or show a wai…
+- [get session](https://anam.ai/docs/api-reference/sessions/get-session.md): Returns a session by ID, including the tool calls made during the session once it has ended and the engine has delivered its session report (`toolCalls` is empty until then, and always empty for LiveKit and audio-passthrough sessions, which never produce a report). Tool call names, timing, status an…
+- [get session analytics](https://anam.ai/docs/api-reference/sessions/get-session-analytics.md): Returns per-turn latency analytics for a session — where time was spent in the transcription → LLM → TTS → first-audio path for each conversational turn, plus session-level summary metrics. Analytics become available once the session has ended and the engine has delivered its session report; until t…
+- [get session recording](https://anam.ai/docs/api-reference/sessions/get-session-recording.md): Returns a presigned URL to download the session recording. Anam-internal admin API keys may fetch recordings for sessions of any organization.
+- [get session transcript](https://anam.ai/docs/api-reference/sessions/get-session-transcript.md): Returns the conversation transcript for a session. Anam-internal admin API keys may fetch transcripts for sessions of any organization.
+- [list sessions](https://anam.ai/docs/api-reference/sessions/list-sessions.md): Returns a list of all sessions for the organization
+- [stop session](https://anam.ai/docs/api-reference/sessions/stop-session.md): Force-terminates a running session. The engine hosting the session disconnects the client and shuts the session down immediately.
+- [create share link](https://anam.ai/docs/api-reference/share-links/create-share-link.md): Create a new share link
+- [delete share link](https://anam.ai/docs/api-reference/share-links/delete-share-link.md): Delete a share link by ID
+- [get share link](https://anam.ai/docs/api-reference/share-links/get-share-link.md): Returns a share link by ID
+- [list share links](https://anam.ai/docs/api-reference/share-links/list-share-links.md): Returns a list of all share links for the organization
+- [update share link](https://anam.ai/docs/api-reference/share-links/update-share-link.md): Update a share link by ID
+- [create tool](https://anam.ai/docs/api-reference/tools/create-tool.md): Create a new tool for function calling in persona sessions
+- [delete tool](https://anam.ai/docs/api-reference/tools/delete-tool.md): Delete a tool. The tool will be soft-deleted and no longer available.
+- [get tool](https://anam.ai/docs/api-reference/tools/get-tool.md): Get a tool by ID
+- [list tools](https://anam.ai/docs/api-reference/tools/list-tools.md): Returns a list of all tools for the organization
+- [update tool](https://anam.ai/docs/api-reference/tools/update-tool.md): Update an existing tool
+- [create voice](https://anam.ai/docs/api-reference/voices/create-voice.md): Create a new voice by cloning from an audio file. Send the audio inline as multipart/form-data (the whole request must stay under ~4.5MB), or, for larger clips, first upload via `POST /v1/voices/presigned-upload` and send a JSON body referencing the returned `audioKey`.
+- [create voice presigned upload](https://anam.ai/docs/api-reference/voices/create-voice-presigned-upload.md): Request a presigned URL for uploading a voice-clone audio clip directly to storage. Use this for clips larger than the ~4.5MB request-body limit of the multipart `POST /v1/voices` endpoint. Flow: (1) call this endpoint to get an `uploadUrl` and `audioKey`; (2) `PUT` the raw audio bytes to `uploadUrl…
+- [delete voice](https://anam.ai/docs/api-reference/voices/delete-voice.md): Delete a voice by ID
+- [get voice](https://anam.ai/docs/api-reference/voices/get-voice.md): Returns a voice by ID
+- [list voices](https://anam.ai/docs/api-reference/voices/list-voices.md): Returns a list of all voices
+- [update voice](https://anam.ai/docs/api-reference/voices/update-voice.md): Update a voice by ID (display name and provider model ID can be updated)
+- [Changelog](https://anam.ai/docs/changelog.md): New features, improvements, and fixes
+- [Embed Anam on your website](https://anam.ai/docs/embed/overview.md): Add an Anam avatar to any website using the Widget, Player, or SDK.    Compare options and follow platform-specific setup guides.
+- [Configuration](https://anam.ai/docs/embed/widget/configuration.md): Configure the widget with HTML attributes, Lab settings, and custom positioning
+- [Events](https://anam.ai/docs/embed/widget/events.md): Listen to widget events for analytics and custom behavior
+- [Framer](https://anam.ai/docs/embed/widget/framer.md): Add an Anam AI avatar widget to your Framer website
+- [Installation](https://anam.ai/docs/embed/widget/installation.md): Install the Anam Widget via CDN, npm, or framework-specific methods
+- [Overview](https://anam.ai/docs/embed/widget/overview.md): Embed a conversational AI agent on any website.
+- [Shopify](https://anam.ai/docs/embed/widget/shopify.md): Add an Anam AI avatar widget to your Shopify store
+- [Squarespace](https://anam.ai/docs/embed/widget/squarespace.md): Add an Anam AI avatar widget to your Squarespace site
+- [Wix](https://anam.ai/docs/embed/widget/wix.md): Add an Anam AI avatar widget to your Wix site
+- [WordPress](https://anam.ai/docs/embed/widget/wordpress.md): Add an Anam AI avatar widget to your WordPress site
+- [LiveKit Configuration](https://anam.ai/docs/integrations/livekit/configuration.md): Configuration options, advanced examples, and API reference for the Anam LiveKit plugin
+- [LiveKit Integration](https://anam.ai/docs/integrations/livekit/overview.md): Add Anam avatars to LiveKit agent applications
+- [LiveKit Quickstart](https://anam.ai/docs/integrations/livekit/quickstart.md): Add an Anam avatar to a LiveKit agent in minutes
+- [Other SDKs & Integrations](https://anam.ai/docs/integrations/sdks.md): Official and community-built SDKs, plugins, and integrations for Anam
+- [Models](https://anam.ai/docs/introduction/models.md): Compare Anam avatar models and choose the right Cara model for your project.
+- [Anam Documentation](https://anam.ai/docs/introduction/overview.md): Explore our docs to start building with Anam
+- [Get your API Key](https://anam.ai/docs/javascript-sdk/api-key.md): Learn how to create and manage your Anam API key from the Lab.       Required to authenticate requests and integrate personas into your app.
+- [Authentication](https://anam.ai/docs/javascript-sdk/authentication.md): Secure your API keys and manage session tokens
+- [Basic application](https://anam.ai/docs/javascript-sdk/examples/basic-app.md): Build a complete web application with an Anam persona
+- [Custom LLM (client-side)](https://anam.ai/docs/javascript-sdk/examples/custom-llm.md): Build your own AI conversation logic with OpenAI, Anthropic, and other language models
+- [Custom TTS (client-side)](https://anam.ai/docs/javascript-sdk/examples/custom-tts.md): Use your own text-to-speech provider with Anam avatars via audio passthrough mode.
+- [Full application](https://anam.ai/docs/javascript-sdk/examples/full-app.md): Build a full-featured Anam application with advanced UI/UX and event handling
+- [Creating Smarter Personas](https://anam.ai/docs/javascript-sdk/examples/smarter-personas.md): Learn how to create personas that can understand and respond to your customers.
+- [Usage in Production](https://anam.ai/docs/javascript-sdk/production.md): Securely deploy Anam AI in production environments
+- [Quickstart](https://anam.ai/docs/javascript-sdk/quickstart.md): Get your first AI persona running in under 5 minutes
+- [Audio Control](https://anam.ai/docs/javascript-sdk/reference/audio-control.md): Control audio input and streaming behavior
+- [Basic Usage](https://anam.ai/docs/javascript-sdk/reference/basic-usage.md): Install, setup, and deploy the Anam AI JavaScript SDK
+- [Event Handling](https://anam.ai/docs/javascript-sdk/reference/event-types.md): React to conversation events and user interactions with Anam personas
+- [Listening for Events](https://anam.ai/docs/javascript-sdk/reference/events.md): Listen to events during Anam AI sessions
+- [Interrupt Command](https://anam.ai/docs/javascript-sdk/reference/interrupt-command.md): Stop the persona from speaking mid-response
+- [Mid-Session Updates](https://anam.ai/docs/javascript-sdk/reference/mid-session-updates.md): Change language, voice, and turn-taking settings while a session is live
+- [Talk Commands](https://anam.ai/docs/javascript-sdk/reference/talk-commands.md): Control persona output using talk commands
+- [User Messages](https://anam.ai/docs/javascript-sdk/reference/user-messages.md): Send messages on behalf of the user programmatically
+- [Custom Avatar Best Practices](https://anam.ai/docs/personas/avatars/custom-avatar-best-practices.md): Technical specifications and source image guidelines for creating custom avatars with Cara 4.
+- [Create your own custom avatar](https://anam.ai/docs/personas/avatars/custom-avatars.md): Upload a photo or use your camera, then test your avatar in a live conversation.
+- [Avatar Gallery](https://anam.ai/docs/personas/avatars/gallery.md): Browse and select from available avatar options for your personas
+- [Director Notes](https://anam.ai/docs/personas/director-notes.md): Use preset styles and inline cues to guide how a Cara 4 avatar performs a conversation.
+- [Knowledge Base (RAG)](https://anam.ai/docs/personas/knowledge/overview.md): Give your AI personas access to your documents using semantic search and Retrieval-Augmented Generation
+- [Knowledge Base Setup](https://anam.ai/docs/personas/knowledge/setup.md): Create folders and organize your documents for semantic search with RAG
+- [Knowledge Tools and RAG](https://anam.ai/docs/personas/knowledge/tools.md): Enable semantic search across your documents using Retrieval-Augmented Generation
+- [Uploading Documents](https://anam.ai/docs/personas/knowledge/uploading-documents.md): Upload and process documents for semantic search in your knowledge base
+- [Available LLMs](https://anam.ai/docs/personas/llms/available-llms.md): Built-in language models you can use with Anam personas
+- [Custom LLMs](https://anam.ai/docs/personas/llms/custom-llms.md): Use your own language models with Anam's digital personas
+- [Prompting guide](https://anam.ai/docs/personas/llms/prompting-guide.md): Engineering effective system prompts for lifelike Anam personas
+- [Meetings](https://anam.ai/docs/personas/meetings.md): Invite a persona to join a Google Meet, Zoom, or Microsoft Teams call as a participant.
+- [Understanding Personas](https://anam.ai/docs/personas/overview.md): Learn how AI personas work and how to customize them
+- [Session Duration](https://anam.ai/docs/personas/session/duration.md): Control how long persona sessions last and configure greeting behavior
+- [Video Options](https://anam.ai/docs/personas/session/video.md): Configure session video dimensions and initial video quality.
+- [Voice Detection](https://anam.ai/docs/personas/session/voice-detection.md): Configure how your persona detects speech, handles silence, and manages turn-taking
+- [Client Tools and Events](https://anam.ai/docs/personas/tools/client-tools.md): Enable your AI persona to trigger actions and control your application's user interface
+- [Tools and Function Calling](https://anam.ai/docs/personas/tools/overview.md): Enable your AI personas to interact with external systems, trigger client actions, and search knowledge bases
+- [System Tools](https://anam.ai/docs/personas/tools/system-tools.md): Built-in tools available to all personas for session control like language switching and turn management
+- [Tool Calling Example](https://anam.ai/docs/personas/tools/tool-calling-example.md): Create your first tool and enable function calling in your AI persona
+- [Webhook Tools](https://anam.ai/docs/personas/tools/webhook-tools.md): Integrate external APIs and services by calling HTTP endpoints from your AI persona
+- [Voice Configuration](https://anam.ai/docs/personas/voices/configuration.md): Configure voice speed, volume, emotion, and provider-specific settings
+- [Custom Voices](https://anam.ai/docs/personas/voices/custom-voices.md): Add custom voices by cloning them with Anam or importing them from providers.
+- [Voice Gallery](https://anam.ai/docs/personas/voices/gallery.md): Browse and select from available voice options for your personas
+- [Multilingual Support](https://anam.ai/docs/personas/voices/multilingual.md): Configure speech recognition for non-English languages to enable global conversations
+- [Installation](https://anam.ai/docs/python-sdk/installation.md): Install the Anam Python SDK
+- [Python SDK](https://anam.ai/docs/python-sdk/overview.md): Use Anam's real-time avatar streaming from Python applications
+- [Python Quickstart](https://anam.ai/docs/python-sdk/quickstart.md): Stream an Anam avatar in a Python application
+- [Python SDK Resources](https://anam.ai/docs/python-sdk/resources.md): Links, examples, and reference material for the Anam Python SDK
+- [Frequently Asked Questions](https://anam.ai/docs/resources/faq.md): Answers to common questions about Anam
+- [Anam MCP](https://anam.ai/docs/resources/mcp.md): Manage personas, avatars, voices, sessions, and more from Claude or any MCP client.
+- [Session Performance](https://anam.ai/docs/resources/session-performance.md): Understand the performance indicators on the sessions page and fix slow response latency
+- [Network Configuration](https://anam.ai/docs/security/network.md): Domains, IPs, and firewall rules required for Anam connections
+- [Privacy](https://anam.ai/docs/security/privacy.md): Configure how your persona handles data and privacy
+
+## OpenAPI Specs
+
+- [swagger](https://anam.ai/docs/swagger.json)
+
+## Optional
+
+- [ElevenLabs Agents](https://anam.ai/cookbook/elevenlabs-server-side-agents)

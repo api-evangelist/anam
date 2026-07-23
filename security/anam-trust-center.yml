@@ -1,0 +1,12 @@
+generated: '2026-07-17'
+method: searched
+probe: false
+url: https://trust.anam.ai/
+certifications:
+- SOC 2
+- HIPAA
+evidence:
+- source: https://www.anam.ai/
+  claim: "Enterprise section states 'HIPAA and SOC 2 certified'."
+- source: https://trust.anam.ai/
+  note: Trust center is a client-rendered SPA; certification list not machine-extractable via fetch.

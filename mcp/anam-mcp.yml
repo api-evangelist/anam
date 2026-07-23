@@ -1,0 +1,143 @@
+generated: '2026-07-17'
+method: derived
+status: candidate
+source: openapi/anam-openapi-original.json
+note: No official Anam MCP server was found (docs, npm @modelcontextprotocol, MCP registries). Candidate
+  tool list derived one-per-operation from the published OpenAPI so an MCP server can be generated.
+server:
+  name: anam
+  transport: http
+  url: null
+tools:
+- name: createSessionToken
+  description: Create session token
+  source_operation: openapi/anam-openapi-original.json#createSessionToken
+- name: getAvatar
+  description: Get avatar by ID
+  source_operation: openapi/anam-openapi-original.json#getAvatar
+- name: updateAvatar
+  description: Update avatar
+  source_operation: openapi/anam-openapi-original.json#updateAvatar
+- name: deleteAvatar
+  description: Delete avatar
+  source_operation: openapi/anam-openapi-original.json#deleteAvatar
+- name: listAvatars
+  description: List avatars
+  source_operation: openapi/anam-openapi-original.json#listAvatars
+- name: createAvatar
+  description: Create one-shot avatar
+  source_operation: openapi/anam-openapi-original.json#createAvatar
+- name: getKnowledgeDocument
+  description: Get document
+  source_operation: openapi/anam-openapi-original.json#getKnowledgeDocument
+- name: updateKnowledgeDocument
+  description: Update document
+  source_operation: openapi/anam-openapi-original.json#updateKnowledgeDocument
+- name: deleteKnowledgeDocument
+  description: Delete document
+  source_operation: openapi/anam-openapi-original.json#deleteKnowledgeDocument
+- name: listKnowledgeGroupDocuments
+  description: List group documents
+  source_operation: openapi/anam-openapi-original.json#listKnowledgeGroupDocuments
+- name: uploadKnowledgeDocument
+  description: Upload document
+  source_operation: openapi/anam-openapi-original.json#uploadKnowledgeDocument
+- name: getKnowledgeGroup
+  description: Get knowledge group
+  source_operation: openapi/anam-openapi-original.json#getKnowledgeGroup
+- name: updateKnowledgeGroup
+  description: Update knowledge group
+  source_operation: openapi/anam-openapi-original.json#updateKnowledgeGroup
+- name: deleteKnowledgeGroup
+  description: Delete knowledge group
+  source_operation: openapi/anam-openapi-original.json#deleteKnowledgeGroup
+- name: searchKnowledgeGroup
+  description: Search knowledge group
+  source_operation: openapi/anam-openapi-original.json#searchKnowledgeGroup
+- name: listKnowledgeGroups
+  description: List knowledge groups
+  source_operation: openapi/anam-openapi-original.json#listKnowledgeGroups
+- name: createKnowledgeGroup
+  description: Create knowledge group
+  source_operation: openapi/anam-openapi-original.json#createKnowledgeGroup
+- name: getLlm
+  description: Get LLM
+  source_operation: openapi/anam-openapi-original.json#getLlm
+- name: updateLlm
+  description: Update LLM
+  source_operation: openapi/anam-openapi-original.json#updateLlm
+- name: deleteLlm
+  description: Delete LLM
+  source_operation: openapi/anam-openapi-original.json#deleteLlm
+- name: listLlms
+  description: List LLMs
+  source_operation: openapi/anam-openapi-original.json#listLlms
+- name: createLlm
+  description: Create LLM
+  source_operation: openapi/anam-openapi-original.json#createLlm
+- name: getPersona
+  description: Get persona
+  source_operation: openapi/anam-openapi-original.json#getPersona
+- name: updatePersona
+  description: Update persona
+  source_operation: openapi/anam-openapi-original.json#updatePersona
+- name: deletePersona
+  description: Delete persona
+  source_operation: openapi/anam-openapi-original.json#deletePersona
+- name: listPersonas
+  description: List personas
+  source_operation: openapi/anam-openapi-original.json#listPersonas
+- name: createPersona
+  description: Create persona
+  source_operation: openapi/anam-openapi-original.json#createPersona
+- name: getSession
+  description: Get session
+  source_operation: openapi/anam-openapi-original.json#getSession
+- name: listSessions
+  description: List sessions
+  source_operation: openapi/anam-openapi-original.json#listSessions
+- name: getShareLink
+  description: Get share link
+  source_operation: openapi/anam-openapi-original.json#getShareLink
+- name: updateShareLink
+  description: Update share link
+  source_operation: openapi/anam-openapi-original.json#updateShareLink
+- name: deleteShareLink
+  description: Delete share link
+  source_operation: openapi/anam-openapi-original.json#deleteShareLink
+- name: listShareLinks
+  description: List share links
+  source_operation: openapi/anam-openapi-original.json#listShareLinks
+- name: createShareLink
+  description: Create share link
+  source_operation: openapi/anam-openapi-original.json#createShareLink
+- name: getTool
+  description: Get tool
+  source_operation: openapi/anam-openapi-original.json#getTool
+- name: updateTool
+  description: Update tool
+  source_operation: openapi/anam-openapi-original.json#updateTool
+- name: deleteTool
+  description: Delete tool
+  source_operation: openapi/anam-openapi-original.json#deleteTool
+- name: listTools
+  description: List tools
+  source_operation: openapi/anam-openapi-original.json#listTools
+- name: createTool
+  description: Create tool
+  source_operation: openapi/anam-openapi-original.json#createTool
+- name: getVoice
+  description: Get voice
+  source_operation: openapi/anam-openapi-original.json#getVoice
+- name: updateVoice
+  description: Update voice
+  source_operation: openapi/anam-openapi-original.json#updateVoice
+- name: deleteVoice
+  description: Delete voice
+  source_operation: openapi/anam-openapi-original.json#deleteVoice
+- name: listVoices
+  description: List voices
+  source_operation: openapi/anam-openapi-original.json#listVoices
+- name: createVoice
+  description: Create voice
+  source_operation: openapi/anam-openapi-original.json#createVoice

@@ -1,0 +1,12 @@
+generated: '2026-07-17'
+method: generated
+source: openapi/anam-openapi-original.json + conventions/anam-conventions.yml
+skills:
+- file: anam-launch-persona-session.md
+  name: Launch an Anam avatar persona session
+  api: openapi/anam-openapi-original.json
+  operations: [createPersona, createSessionToken, getSession]
+- file: anam-knowledge-and-tools.md
+  name: Ground an Anam persona with knowledge and tools
+  api: openapi/anam-openapi-original.json
+  operations: [createKnowledgeGroup, uploadKnowledgeDocument, searchKnowledgeGroup, createTool, updatePersona]

@@ -1,0 +1,210 @@
+openapi: 3.1.0
+info:
+  title: Anam AI Auth Share Links API
+  version: '1.0'
+servers:
+- url: https://api.anam.ai
+  description: Anam API
+security:
+- BearerAuth: []
+tags:
+- name: Share Links
+paths:
+  /v1/share-links/{id}:
+    get:
+      summary: Get share link
+      description: Returns a share link by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: get-share-link
+          description: Get details of a specific share link by its ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: Share link ID
+      responses:
+        '200':
+          description: Successfully retrieved share link
+        '400':
+          description: Bad request - Invalid share link ID
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Share link not found
+        '500':
+          description: Server error
+      operationId: getShareLink
+      tags:
+      - Share Links
+    put:
+      summary: Update share link
+      description: Update a share link by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: update-share-link
+          description: Update a share link's expiration time and usage limit
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: Share link ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expiresInHours:
+                  type: number
+                usageLimit:
+                  type: number
+      responses:
+        '200':
+          description: Successfully updated share link
+        '400':
+          description: Bad request - Invalid share link data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Share link not found
+        '500':
+          description: Server error
+      operationId: updateShareLink
+      tags:
+      - Share Links
+    delete:
+      summary: Delete share link
+      description: Delete a share link by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: delete-share-link
+          description: Delete a share link. Use with caution as this cannot be undone.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: Share link ID
+      responses:
+        '200':
+          description: Successfully deleted share link
+        '400':
+          description: Bad request - Invalid share link ID
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Share link not found
+        '500':
+          description: Server error
+      operationId: deleteShareLink
+      tags:
+      - Share Links
+  /v1/share-links:
+    get:
+      summary: List share links
+      description: Returns a list of all share links for the organization
+      x-mint:
+        mcp:
+          enabled: true
+          name: list-share-links
+          description: Get a paginated list of all share links with optional filtering
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: perPage
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+        description: Number of items per page (max 100)
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search term to filter share links
+      - in: query
+        name: personaId
+        schema:
+          type: string
+          format: uuid
+        description: Filter share links by persona ID
+      responses:
+        '200':
+          description: Successfully retrieved share links
+        '400':
+          description: Bad request - Invalid query parameters
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: listShareLinks
+      tags:
+      - Share Links
+    post:
+      summary: Create share link
+      description: Create a new share link
+      x-mint:
+        mcp:
+          enabled: true
+          name: create-share-link
+          description: Create a new share link for a persona with expiration and usage limits
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - personaId
+              properties:
+                personaId:
+                  type: string
+                  format: uuid
+                expiresInHours:
+                  type: number
+                  default: 168
+                usageLimit:
+                  type: number
+                  default: 10
+      responses:
+        '201':
+          description: Successfully created share link
+        '400':
+          description: Bad request - Invalid share link data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Persona not found
+        '500':
+          description: Server error
+      operationId: createShareLink
+      tags:
+      - Share Links
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-mint:
+  mcp:
+    enabled: true

@@ -1,0 +1,203 @@
+openapi: 3.1.0
+info:
+  title: Anam AI Auth Personas API
+  version: '1.0'
+servers:
+- url: https://api.anam.ai
+  description: Anam API
+security:
+- BearerAuth: []
+tags:
+- name: Personas
+paths:
+  /v1/personas/{id}:
+    get:
+      summary: Get persona
+      description: Returns a persona by id
+      x-mint:
+        mcp:
+          enabled: true
+          name: get-persona
+          description: Get details of a specific persona by its ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: Persona id
+      responses:
+        '200':
+          description: Successfully retrieved personas
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - No personas found
+        '500':
+          description: Server error
+      operationId: getPersona
+      tags:
+      - Personas
+    put:
+      summary: Update persona
+      description: Update a persona by id
+      x-mint:
+        mcp:
+          enabled: true
+          name: update-persona
+          description: Update a persona's configuration including avatar, voice, LLM, and system prompt
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: Persona id
+        required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the persona
+                description:
+                  type: string
+                  nullable: true
+                  description: Description of the persona
+                avatarId:
+                  type: string
+                  description: ID of the avatar to use
+                voiceId:
+                  type: string
+                  description: ID of the voice to use
+                llmId:
+                  type: string
+                  description: ID of the LLM to use
+                brainType:
+                  type: string
+                  enum:
+                  - ANAM_GPT_4O_MINI_V1
+                  - ANAM_LLAMA_v3_3_70B_V1
+                  - CUSTOMER_CLIENT_V1
+                  description: Type of LLM to use
+                systemPrompt:
+                  type: string
+                  nullable: true
+                  description: System prompt for the LLM
+              additionalProperties: false
+      responses:
+        '200':
+          description: Successfully updated persona
+        '400':
+          description: Bad request - Invalid persona data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '403':
+          description: Forbidden - Account does not have access
+        '404':
+          description: Not Found - Persona not found
+        '500':
+          description: Server error
+      operationId: updatePersona
+      tags:
+      - Personas
+    delete:
+      summary: Delete persona
+      description: Delete a persona by id
+      x-mint:
+        mcp:
+          enabled: true
+          name: delete-persona
+          description: Delete a persona. Use with caution as this cannot be undone.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: Persona id
+        required: true
+      responses:
+        '200':
+          description: Successfully deleted persona
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '403':
+          description: Forbidden - Account does not have access
+        '404':
+          description: Not Found - Persona not found
+        '500':
+          description: Server error
+      operationId: deletePersona
+      tags:
+      - Personas
+  /v1/personas:
+    get:
+      summary: List personas
+      description: Returns a list of all personas with pagination support
+      x-mint:
+        mcp:
+          enabled: true
+          name: list-personas
+          description: Get a paginated list of all personas with optional search filtering
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: perPage
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        description: Number of items per page
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: filter personas by name
+      responses:
+        '200':
+          description: Successfully retrieved personas
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: listPersonas
+      tags:
+      - Personas
+    post:
+      summary: Create persona
+      description: Create a new persona
+      x-mint:
+        mcp:
+          enabled: true
+          name: create-persona
+          description: Create a new persona with avatar, voice, and LLM configuration
+      responses:
+        '201':
+          description: Successfully created persona
+        '400':
+          description: Bad request - Invalid persona data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: createPersona
+      tags:
+      - Personas
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-mint:
+  mcp:
+    enabled: true

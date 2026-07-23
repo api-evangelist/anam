@@ -1,0 +1,39 @@
+generated: '2026-07-17'
+method: searched
+source: https://anam.ai/docs/changelog
+scheme: dated
+current_version: v1
+entries:
+- date: '2026-07-10'
+  additions:
+  - Personas can now join Google Meet, Zoom, and Microsoft Teams calls as participants.
+  - Meetings API with /v1/meetings/invites endpoints.
+  - Invite action added to Build page for published personas.
+  breaking: false
+- date: '2026-06-22'
+  highlights:
+  - Persona sessions connect significantly faster (p50 time-to-first-frame under 1 second).
+  - Mid-session config updates for language, voice generation, and voice detection without reconnecting.
+  - JavaScript SDK v4.15.0 adds rtcConfiguration support.
+  - 'Fix: restored LiveKit plugin payload compatibility.'
+  breaking: false
+- date: '2026-05-27'
+  highlights:
+  - Lab interface refresh across Build, Personas, Sessions, Dashboard, and API Keys.
+  - Silence prompts and automatic session endings can be disabled by setting timeout values to 0.
+  - Custom LLM editing fully supported in Build page.
+  - Confirmed end_call flow with standardized close messages.
+  breaking: false
+- date: '2026-05-12'
+  highlights:
+  - Cara 4 now available in early access with higher-resolution avatar output.
+  - Cartesia voice clones upgraded to Sonic 3.5.
+  - Knowledge Library interface redesigned.
+  - Configurable first messages for personas via Lab.
+  breaking: false
+- date: '2026-04-20'
+  highlights:
+  - sessionOptions.videoQuality parameter to pin sessions to high video quality.
+  - Tool-driven turns can optionally suppress interruptions while the app handles actions.
+  - 'Fix: avatar refinement better preserves plain backgrounds during one-shot creation.'
+  breaking: false

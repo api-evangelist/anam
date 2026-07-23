@@ -1,0 +1,41 @@
+generated: '2026-07-17'
+method: searched
+source: https://anam.ai/docs + openapi/anam-openapi-original.json
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <API_KEY>'
+  session_model: >-
+    Server API key (from lab.anam.ai) is exchanged at POST /v1/auth/session-token for a
+    short-lived signed session-token JWT (valid ~1 hour) that client SDKs pass to open the
+    WebRTC persona connection.
+  see: authentication/anam-authentication.yml
+pagination:
+  style: page-number
+  params:
+    page: 'Page number, min 1, default 1'
+    perPage: 'Items per page, 1-100, default 10'
+  response_envelope:
+    data: array of resource objects
+    meta:
+      fields: [total, lastPage, currentPage, perPage, prev, next]
+  filters:
+    common: [search]
+    note: List operations add resource-specific filters (e.g. apiKeyId, personaId on sessions).
+idempotency:
+  supported: false
+  note: No idempotency-key header/param documented or present in the OpenAPI.
+versioning:
+  style: uri-path
+  current: v1
+  see: lifecycle/anam-lifecycle.yml
+error_envelope:
+  style: http-status
+  note: HTTP status code with message text; not RFC 9457 problem+json.
+  see: errors/anam-problem-types.yml
+rate_limiting:
+  documented: false
+  note: >-
+    No rate-limit response headers documented. Concurrency is advisory instead - see
+    GET /v1/sessions concurrency status endpoint and per-plan concurrent-session limits.
+request_tracing:
+  request_id_header: null

@@ -1,0 +1,29 @@
+generated: '2026-07-17'
+method: searched
+source: live /.well-known/ probes on anam.ai hosts
+hosts:
+- host: https://www.anam.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: anam-security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://api.anam.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404

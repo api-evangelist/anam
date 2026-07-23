@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Anam AI Auth Sessions API
+  version: '1.0'
+servers:
+- url: https://api.anam.ai
+  description: Anam API
+security:
+- BearerAuth: []
+tags:
+- name: Sessions
+paths:
+  /v1/sessions/{id}:
+    get:
+      summary: Get session
+      description: Returns a session by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: get-session
+          description: Get details of a specific session by its ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: Session ID
+      responses:
+        '200':
+          description: Successfully retrieved session
+        '400':
+          description: Bad request - Invalid session ID
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Session not found
+        '500':
+          description: Server error
+      operationId: getSession
+      tags:
+      - Sessions
+  /v1/sessions:
+    get:
+      summary: List sessions
+      description: Returns a list of all sessions for the organization
+      x-mint:
+        mcp:
+          enabled: true
+          name: list-sessions
+          description: Get a paginated list of all sessions with optional filtering by API key or persona
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: perPage
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        description: Number of items per page (max 100)
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search term to filter sessions by ID or client label
+      - in: query
+        name: apiKeyId
+        schema:
+          type: string
+          format: uuid
+        description: Filter sessions by API key ID
+      - in: query
+        name: personaId
+        schema:
+          type: string
+          format: uuid
+        description: Filter sessions by persona ID
+      responses:
+        '200':
+          description: Successfully retrieved sessions
+        '400':
+          description: Bad request - Invalid query parameters
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: listSessions
+      tags:
+      - Sessions
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-mint:
+  mcp:
+    enabled: true

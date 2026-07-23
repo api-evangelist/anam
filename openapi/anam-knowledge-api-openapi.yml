@@ -1,0 +1,374 @@
+openapi: 3.1.0
+info:
+  title: Anam AI Auth Knowledge API
+  version: '1.0'
+servers:
+- url: https://api.anam.ai
+  description: Anam API
+security:
+- BearerAuth: []
+tags:
+- name: Knowledge
+paths:
+  /v1/knowledge/documents/{id}:
+    get:
+      summary: Get document
+      description: Get a single document by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: get-knowledge-document
+          description: Get details of a specific knowledge base document by its ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved document
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Document not found
+        '500':
+          description: Server error
+      operationId: getKnowledgeDocument
+      tags:
+      - Knowledge
+    put:
+      summary: Update document
+      description: Update a document (rename)
+      x-mint:
+        mcp:
+          enabled: true
+          name: update-knowledge-document
+          description: Update a knowledge base document (rename)
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                  description: New filename for the document
+      responses:
+        '200':
+          description: Successfully updated document
+        '400':
+          description: Bad request - Invalid data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Document not found
+        '500':
+          description: Server error
+      operationId: updateKnowledgeDocument
+      tags:
+      - Knowledge
+    delete:
+      summary: Delete document
+      description: Delete a document from a RAG group
+      x-mint:
+        mcp:
+          enabled: true
+          name: delete-knowledge-document
+          description: Delete a document from a knowledge base group. Use with caution as this cannot be undone.
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted document
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Document not found
+        '500':
+          description: Server error
+      operationId: deleteKnowledgeDocument
+      tags:
+      - Knowledge
+  /v1/knowledge/groups/{id}/documents:
+    get:
+      summary: List group documents
+      description: Get all documents in a RAG group
+      x-mint:
+        mcp:
+          enabled: true
+          name: list-knowledge-group-documents
+          description: Get all documents in a specific knowledge base group
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved documents
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: RAG group not found
+        '500':
+          description: Server error
+      operationId: listKnowledgeGroupDocuments
+      tags:
+      - Knowledge
+    post:
+      summary: Upload document
+      description: Upload a document to a RAG group (Supports TXT, MD, DOCX, CSV up to 50MB)
+      x-mint:
+        mcp:
+          enabled: true
+          name: upload-knowledge-document
+          description: Upload a document to a knowledge base group (TXT, MD, DOCX, CSV up to 50MB)
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Document file (TXT, MD, DOCX, or CSV, max 50MB). PDF upload temporarily disabled.
+                chunkSize:
+                  type: integer
+                  default: 1000
+                chunkOverlap:
+                  type: integer
+                  default: 200
+      responses:
+        '201':
+          description: Successfully uploaded document
+        '400':
+          description: Bad request - Invalid file or parameters
+        '401':
+          description: Unauthorized - Invalid or missing API key/upload token
+        '404':
+          description: RAG group not found
+        '500':
+          description: Server error
+      operationId: uploadKnowledgeDocument
+      tags:
+      - Knowledge
+  /v1/knowledge/groups/{id}:
+    get:
+      summary: Get knowledge group
+      description: Get a single RAG group by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: get-knowledge-group
+          description: Get details of a specific knowledge base group by its ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved RAG group
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: RAG group not found
+        '500':
+          description: Server error
+      operationId: getKnowledgeGroup
+      tags:
+      - Knowledge
+    put:
+      summary: Update knowledge group
+      description: Update a RAG group
+      x-mint:
+        mcp:
+          enabled: true
+          name: update-knowledge-group
+          description: Update a knowledge base group's name and description
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Successfully updated RAG group
+        '400':
+          description: Bad request - Invalid data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: RAG group not found
+        '500':
+          description: Server error
+      operationId: updateKnowledgeGroup
+      tags:
+      - Knowledge
+    delete:
+      summary: Delete knowledge group
+      description: Delete a RAG group
+      x-mint:
+        mcp:
+          enabled: true
+          name: delete-knowledge-group
+          description: Delete a knowledge base group. Use with caution as this cannot be undone.
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully deleted RAG group
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: RAG group not found
+        '500':
+          description: Server error
+      operationId: deleteKnowledgeGroup
+      tags:
+      - Knowledge
+  /v1/knowledge/groups/{id}/search:
+    post:
+      summary: Search knowledge group
+      description: Search for similar content in a RAG group using vector similarity
+      x-mint:
+        mcp:
+          enabled: true
+          name: search-knowledge-group
+          description: Search for similar content in a knowledge base group using vector similarity
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                limit:
+                  type: integer
+                  minimum: 1
+                  maximum: 20
+                  default: 5
+      responses:
+        '200':
+          description: Successfully retrieved search results
+        '400':
+          description: Bad request - Invalid search query
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: RAG group not found
+        '500':
+          description: Server error
+      operationId: searchKnowledgeGroup
+      tags:
+      - Knowledge
+  /v1/knowledge/groups:
+    get:
+      summary: List knowledge groups
+      description: Returns a list of all knowledge groups for the organization
+      x-mint:
+        mcp:
+          enabled: true
+          name: list-knowledge-groups
+          description: Get a list of all knowledge base groups for the organization
+      responses:
+        '200':
+          description: Successfully retrieved knowledge groups
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: listKnowledgeGroups
+      tags:
+      - Knowledge
+    post:
+      summary: Create knowledge group
+      description: Create a new knowledge group
+      x-mint:
+        mcp:
+          enabled: true
+          name: create-knowledge-group
+          description: Create a new knowledge base group with a name and optional description
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Successfully created knowledge group
+        '400':
+          description: Bad request - Invalid data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: createKnowledgeGroup
+      tags:
+      - Knowledge
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-mint:
+  mcp:
+    enabled: true

@@ -1,0 +1,28 @@
+generated: '2026-07-17'
+method: searched
+source: openapi/anam-openapi-original.json + https://www.anam.ai/ (compliance claims) + https://trust.anam.ai/
+standards:
+- id: oauth2
+  conforms: false
+  evidence: API uses HTTP Bearer (API key -> session-token JWT), no OAuth2 flows declared.
+- id: oidc
+  conforms: false
+- id: http-bearer
+  conforms: true
+  evidence: openapi securitySchemes BearerAuth type http scheme bearer
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 4xx/5xx responses are description-only, no application/problem+json media type.
+- id: pagination
+  conforms: true
+  evidence: list operations use page/perPage query params with data+meta envelope.
+- id: soc2
+  conforms: true
+  evidence: "anam.ai marketing states 'HIPAA and SOC 2 certified'; trust center at https://trust.anam.ai/"
+- id: hipaa
+  conforms: true
+  evidence: "anam.ai marketing states 'HIPAA and SOC 2 certified' for enterprise deployments"
+compliance:
+  certifications: [SOC 2, HIPAA]
+  trust_center: https://trust.anam.ai/
+  source: https://www.anam.ai/

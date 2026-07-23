@@ -1,0 +1,93 @@
+generated: '2026-07-17'
+method: derived
+source: openapi/anam-openapi-original.json
+format: http-status
+note: Anam error responses are HTTP status + description only (no RFC 9457 application/problem+json body
+  in the published spec).
+envelope: HTTP status code; message text in response body.
+problems:
+- status: 400
+  title: Invalid request body
+  descriptions:
+  - Bad request - Invalid LLM data
+  - Bad request - Invalid avatar ID
+  - Bad request - Invalid avatar data
+  - Bad request - Invalid avatar data, missing image file/URL, or both provided
+  - Bad request - Invalid data
+  - Bad request - Invalid file or parameters
+  - Bad request - Invalid persona data
+  - Bad request - Invalid query parameters
+  - Bad request - Invalid search query
+  - Bad request - Invalid session ID
+  - Bad request - Invalid share link ID
+  - Bad request - Invalid share link data
+  - Bad request - Invalid tool data
+  - Bad request - Invalid voice ID
+  - Bad request - Invalid voice data
+  - Invalid request body
+  remediation: Validate the request body against the operation schema.
+  example_operations:
+  - createAvatar
+  - createKnowledgeGroup
+  - createLlm
+  - createPersona
+  - createSessionToken
+- status: 401
+  title: Unauthorized - invalid or missing API key
+  descriptions:
+  - Unauthorized - Invalid or missing API key
+  - Unauthorized - Invalid or missing API key/upload token
+  remediation: 'Provide a valid API key as `Authorization: Bearer <API_KEY>`.'
+  example_operations:
+  - createAvatar
+  - createKnowledgeGroup
+  - createLlm
+  - createPersona
+  - createSessionToken
+- status: 403
+  title: Forbidden - requires enterprise plan
+  descriptions:
+  - Forbidden - Account does not have access
+  - Forbidden - Cannot delete default LLMs
+  - Forbidden - Cannot update default LLMs
+  - Forbidden - Requires enterprise plan
+  remediation: The operation requires an enterprise plan or higher privileges.
+  example_operations:
+  - createAvatar
+  - createVoice
+  - deleteLlm
+  - deletePersona
+  - listVoices
+- status: 404
+  title: Not Found
+  descriptions:
+  - Document not found
+  - LLM not found
+  - Not Found - Avatar not found
+  - Not Found - No avatars found
+  - Not Found - No personas found
+  - Not Found - No voices found
+  - Not Found - Persona not found
+  - Not Found - Session not found
+  - Not Found - Share link not found
+  - Not Found - Voice not found
+  - RAG group not found
+  - Tool not found
+  remediation: Verify the resource id exists and belongs to your organization.
+  example_operations:
+  - createShareLink
+  - deleteAvatar
+  - deleteKnowledgeDocument
+  - deleteKnowledgeGroup
+  - deleteLlm
+- status: 500
+  title: Server error
+  descriptions:
+  - Server error
+  remediation: Retry later; contact support@anam.ai if it persists.
+  example_operations:
+  - createAvatar
+  - createKnowledgeGroup
+  - createLlm
+  - createPersona
+  - createSessionToken

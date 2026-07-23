@@ -1,0 +1,92 @@
+openapi: 3.1.0
+info:
+  title: Anam AI Auth API
+  version: '1.0'
+servers:
+- url: https://api.anam.ai
+  description: Anam API
+security:
+- BearerAuth: []
+tags:
+- name: Auth
+paths:
+  /v1/auth/session-token:
+    post:
+      summary: Create session token
+      description: Create a new session token used to initialise the anam client
+      x-mint:
+        mcp:
+          enabled: true
+          name: create-session-token
+          description: Create a new session token for initializing the Anam client with a persona configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientLabel:
+                  type: string
+                  description: The client label for the session
+                personaConfig:
+                  oneOf:
+                  - type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Cara
+                        optional: true
+                      avatarId:
+                        type: string
+                        example: 30fa96d0-26c4-4e55-94a0-517025942e18
+                      voiceId:
+                        type: string
+                        example: 6bfbe25a-979d-40f3-a92b-5394170af54b
+                      brainType:
+                        type: string
+                        enum:
+                        - ANAM_GPT_4O_MINI_V1
+                        - ANAM_LLAMA_v3_3_70B_V1
+                        - CUSTOMER_CLIENT_V1
+                      systemPrompt:
+                        type: string
+                        example: You are a helpful assistant
+                      maxSessionLengthSeconds:
+                        type: number
+                        example: 600
+                        optional: true
+                  - type: object
+                    properties:
+                      personaId:
+                        type: string
+                sessionOptions:
+                  type: object
+                  properties:
+                    sessionReplay:
+                      type: object
+                      properties:
+                        enableSessionReplay:
+                          type: boolean
+                          example: true
+                          default: true
+      responses:
+        '200':
+          description: Successfully started session
+        '400':
+          description: Invalid request body
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: createSessionToken
+      tags:
+      - Auth
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-mint:
+  mcp:
+    enabled: true

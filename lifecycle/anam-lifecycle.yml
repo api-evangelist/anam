@@ -1,0 +1,18 @@
+generated: '2026-07-17'
+method: searched
+source: https://anam.ai/docs + https://status.anam.ai/ + openapi/anam-openapi-original.json
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.anam.ai/v1
+  docs: https://anam.ai/docs/api-reference/overview
+model_versioning:
+  note: Avatar engine is versioned independently (cara-3, cara-4, cara-4-latest) via avatarModel in personaConfig.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No formal deprecation/Sunset-header policy published.
+status_page: https://status.anam.ai/
+changelog: https://anam.ai/docs/changelog
+trust_center: https://trust.anam.ai/
+deprecated_operations: []

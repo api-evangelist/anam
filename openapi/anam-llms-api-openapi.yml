@@ -1,0 +1,233 @@
+openapi: 3.1.0
+info:
+  title: Anam AI Auth Llms API
+  version: '1.0'
+servers:
+- url: https://api.anam.ai
+  description: Anam API
+security:
+- BearerAuth: []
+tags:
+- name: Llms
+paths:
+  /v1/llms/{id}:
+    get:
+      summary: Get LLM
+      description: Get a specific LLM by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: get-llm
+          description: Get details of a specific LLM configuration by its ID
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The LLM ID
+      responses:
+        '200':
+          description: Successfully retrieved LLM
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: LLM not found
+        '500':
+          description: Server error
+      operationId: getLlm
+      tags:
+      - Llms
+    put:
+      summary: Update LLM
+      description: Update an LLM configuration
+      x-mint:
+        mcp:
+          enabled: true
+          name: update-llm
+          description: Update an LLM configuration (cannot update default LLMs)
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The LLM ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayName:
+                  type: string
+                description:
+                  type: string
+                url:
+                  type: string
+                llmFormat:
+                  type: string
+                  enum:
+                  - openai
+                  - azure_openai
+                  - anthropic
+                  - custom
+                modelName:
+                  type: string
+                secret:
+                  type: string
+                metadata:
+                  type: object
+      responses:
+        '200':
+          description: Successfully updated LLM
+        '400':
+          description: Bad request - Invalid LLM data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '403':
+          description: Forbidden - Cannot update default LLMs
+        '404':
+          description: LLM not found
+        '500':
+          description: Server error
+      operationId: updateLlm
+      tags:
+      - Llms
+    delete:
+      summary: Delete LLM
+      description: Delete an LLM configuration
+      x-mint:
+        mcp:
+          enabled: true
+          name: delete-llm
+          description: Delete an LLM configuration (cannot delete default LLMs). Use with caution.
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: The LLM ID
+      responses:
+        '204':
+          description: Successfully deleted LLM
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '403':
+          description: Forbidden - Cannot delete default LLMs
+        '404':
+          description: LLM not found
+        '500':
+          description: Server error
+      operationId: deleteLlm
+      tags:
+      - Llms
+  /v1/llms:
+    get:
+      summary: List LLMs
+      description: Returns a list of all LLMs available to the organization
+      x-mint:
+        mcp:
+          enabled: true
+          name: list-llms
+          description: Get a list of all LLM configurations available to the organization with optional filtering
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Page number for pagination
+      - in: query
+        name: perPage
+        schema:
+          type: integer
+        description: Number of items per page
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search term to filter LLMs
+      - in: query
+        name: includeDefaults
+        schema:
+          type: boolean
+        description: Include default LLMs in the response
+      responses:
+        '200':
+          description: Successfully retrieved LLMs
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: listLlms
+      tags:
+      - Llms
+    post:
+      summary: Create LLM
+      description: Create a new LLM configuration
+      x-mint:
+        mcp:
+          enabled: true
+          name: create-llm
+          description: Create a new custom LLM configuration for the organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - displayName
+              - urls
+              - llmFormat
+              - modelName
+              - secret
+              properties:
+                displayName:
+                  type: string
+                description:
+                  type: string
+                urls:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      url:
+                        type: string
+                        format: uri
+                llmFormat:
+                  type: string
+                  enum:
+                  - openai
+                  - azure_openai
+                  - gemini
+                  - advanced_voice
+                  - none
+                modelName:
+                  type: string
+                secret:
+                  type: string
+                metadata:
+                  type: object
+      responses:
+        '201':
+          description: Successfully created LLM
+        '400':
+          description: Bad request - Invalid LLM data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '500':
+          description: Server error
+      operationId: createLlm
+      tags:
+      - Llms
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-mint:
+  mcp:
+    enabled: true

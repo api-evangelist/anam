@@ -1,0 +1,40 @@
+generated: '2026-07-17'
+method: searched
+source: registry probes (npm, PyPI) + https://github.com/anam-org
+packages:
+- language: javascript
+  registry: npm
+  name: "@anam-ai/js-sdk"
+  version: 4.21.0
+  url: https://www.npmjs.com/package/@anam-ai/js-sdk
+  repository: https://github.com/anam-org/javascript-sdk
+  install: npm install @anam-ai/js-sdk
+  description: Client side JavaScript SDK for Anam AI real-time avatars.
+  official: true
+- language: python
+  registry: pypi
+  name: anam
+  version: 0.6.0
+  url: https://pypi.org/project/anam/
+  repository: https://github.com/anam-org/python-sdk
+  install: pip install anam
+  description: Official Python SDK for Anam AI - real-time AI avatar streaming.
+  official: true
+- language: kotlin
+  registry: github
+  name: kmp-sdk
+  url: https://github.com/anam-org/kmp-sdk
+  repository: https://github.com/anam-org/kmp-sdk
+  install: null
+  description: Kotlin Multiplatform SDK for Anam AI.
+  official: true
+- language: python
+  registry: pypi
+  name: pipecat-anam
+  url: https://github.com/anam-org/pipecat-anam
+  repository: https://github.com/anam-org/pipecat-anam
+  install: null
+  description: Anam video avatar service plugin for the Pipecat real-time framework.
+  official: true
+notes:
+- The PyPI package `anam-python-sdk` (v0.4.0) is community/unofficial and is intentionally excluded.

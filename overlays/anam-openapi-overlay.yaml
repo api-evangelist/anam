@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Anam AI API
+  version: 1.0.0
+extends: openapi/anam-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-17'
+    x-apievangelist-provider: anam
+    x-apievangelist-category: ai-avatars
+    x-api-portal: https://anam.ai/docs
+    x-status-page: https://status.anam.ai/
+    x-trust-center: https://trust.anam.ai/
+- target: $
+  update:
+    x-conventions:
+      auth: Bearer API key exchanged for a short-lived session-token JWT (1 hour).
+      pagination:
+        style: page-number
+        params: [page, perPage]
+        response_envelope: { data: array, meta: pagination }
+      idempotency: not-supported

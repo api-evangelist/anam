@@ -1,0 +1,68 @@
+generated: '2026-07-17'
+method: derived
+source: openapi/anam-openapi-original.json + https://anam.ai/docs/api-reference
+note: >-
+  Entity graph derived from the resource collections and the id-reference fields used in
+  personaConfig and list filters. The published OpenAPI uses inline schemas (no named
+  components), so relationships are inferred from documented id fields.
+entities:
+- name: Persona
+  collection: /v1/personas
+  references: [avatarId, voiceId, llmId, toolIds]
+- name: Avatar
+  collection: /v1/avatars
+  note: One-shot avatar created from an image; versioned by avatarModel (cara-3, cara-4).
+- name: Voice
+  collection: /v1/voices
+  note: Cloned from an audio clip.
+- name: Llm
+  collection: /v1/llms
+  note: LLM configuration/routing (GPT-4o, Claude, Mistral).
+- name: Tool
+  collection: /v1/tools
+  note: Function-calling tool definition for persona sessions.
+- name: KnowledgeGroup
+  collection: /v1/knowledge/groups
+  note: RAG group.
+- name: KnowledgeDocument
+  collection: /v1/knowledge/documents
+- name: Session
+  collection: /v1/sessions
+  references: [personaId, apiKeyId]
+- name: SessionToken
+  collection: /v1/auth/session-token
+  note: Short-lived JWT minted from an API key + personaConfig.
+- name: ShareLink
+  collection: /v1/share-links
+- name: MeetingInvite
+  collection: /v1/meetings/invites
+  note: Invites a persona into Google Meet/Zoom/Teams (documented; not in published OpenAPI subset).
+relationships:
+- from: Persona
+  type: belongs_to
+  to: Avatar
+  via: avatarId
+- from: Persona
+  type: belongs_to
+  to: Voice
+  via: voiceId
+- from: Persona
+  type: belongs_to
+  to: Llm
+  via: llmId
+- from: Persona
+  type: has_many
+  to: Tool
+  via: toolIds
+- from: KnowledgeDocument
+  type: belongs_to
+  to: KnowledgeGroup
+  via: groupId
+- from: Session
+  type: belongs_to
+  to: Persona
+  via: personaId
+- from: SessionToken
+  type: belongs_to
+  to: Persona
+  via: personaConfig.personaId

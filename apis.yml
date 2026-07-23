@@ -1,22 +1,209 @@
 aid: anam
 name: Anam
-description: 'Anam is a company surfaced as a portfolio company of redpoint-ventures and added to the
-  API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Anam builds real-time, interactive AI avatars — photorealistic conversational personas that
+  hold face-to-face video conversations for customer support, sales, tutoring, medical and
+  training use cases. Its CARA avatar engine streams over WebRTC with sub-200ms latency and
+  70+ languages, fronted by a REST API (api.anam.ai) for managing personas, avatars, voices,
+  LLM routing, knowledge (RAG) groups, function-calling tools, session tokens, share links and
+  session analytics. Developers integrate via first-party JavaScript and Python SDKs, a Kotlin
+  Multiplatform SDK, and a Pipecat plugin, or embed a no-code widget. Anam is a Redpoint
+  Ventures portfolio company.
 url: https://raw.githubusercontent.com/api-evangelist/anam/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - redpoint-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-public-api
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
 modified: '2026-07-17'
 tags:
 - Company
 - Ai
-apis: []
+- Avatars
+- Conversational AI
+- Video
+- Real-Time
+- Voice
+- Agents
+image: https://framerusercontent.com/assets/cyASyHEg6g3WK5dCwQoOyyVbFZU.png
+apis:
+- aid: anam:anam-auth-api
+  name: Anam Auth API
+  description: The Auth API from Anam — 1 operation(s) for auth.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-auth-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-avatars-api
+  name: Anam Avatars API
+  description: The Avatars API from Anam — 2 operation(s) for avatars.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Avatars
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-avatars-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-knowledge-api
+  name: Anam Knowledge API
+  description: The Knowledge API from Anam — 5 operation(s) for knowledge.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Knowledge
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-knowledge-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-llms-api
+  name: Anam Llms API
+  description: The Llms API from Anam — 2 operation(s) for llms.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Llms
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-llms-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-personas-api
+  name: Anam Personas API
+  description: The Personas API from Anam — 2 operation(s) for personas.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Personas
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-personas-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-sessions-api
+  name: Anam Sessions API
+  description: The Sessions API from Anam — 2 operation(s) for sessions.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-sessions-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-share-links-api
+  name: Anam Share Links API
+  description: The Share Links API from Anam — 2 operation(s) for share links.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Share Links
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-share-links-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-tools-api
+  name: Anam Tools API
+  description: The Tools API from Anam — 2 operation(s) for tools.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Tools
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-tools-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-voices-api
+  name: Anam Voices API
+  description: The Voices API from Anam — 2 operation(s) for voices.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Voices
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-voices-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,3 +212,76 @@ maintainers:
 common:
 - type: Website
   url: https://www.anam.ai/
+- type: DeveloperPortal
+  url: https://anam.ai/docs
+- type: Documentation
+  url: https://anam.ai/docs
+- type: APIReference
+  url: https://anam.ai/docs/api-reference/overview
+- type: GettingStarted
+  url: https://anam.ai/docs/quickstart
+- type: SignUp
+  url: https://lab.anam.ai/
+- type: Pricing
+  url: https://anam.ai/pricing
+- type: Blog
+  url: https://anam.ai/blog
+- type: TermsOfService
+  url: https://anam.ai/terms-of-service
+- type: PrivacyPolicy
+  url: https://anam.ai/privacy-policy
+- type: Support
+  url: mailto:support@anam.ai
+- type: GitHubOrganization
+  url: https://github.com/anam-org
+- type: StatusPage
+  url: https://status.anam.ai/
+- type: ChangeLog
+  url: changelog/anam-changelog.yml
+- type: TrustCenter
+  url: https://trust.anam.ai/
+- type: Compliance
+  url: https://trust.anam.ai/
+- type: OpenAPI
+  url: openapi/anam-openapi-original.json
+- type: LLMsTxt
+  url: llms/anam-llms.txt
+- type: Packages
+  url: packages/anam-packages.yml
+- type: SDKs
+  url: packages/anam-packages.yml
+- type: MCPServer
+  url: mcp/anam-mcp.yml
+- type: Overlay
+  url: overlays/anam-openapi-overlay.yaml
+- type: Conformance
+  url: conformance/anam-conformance.yml
+- type: ErrorCatalog
+  url: errors/anam-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/anam-lifecycle.yml
+- type: Conventions
+  url: conventions/anam-conventions.yml
+- type: DataModel
+  url: data-model/anam-data-model.yml
+- type: Authentication
+  url: authentication/anam-authentication.yml
+- type: AgenticAccess
+  url: agentic-access/anam-agentic-access.yml
+- type: WellKnown
+  url: well-known/anam-well-known.yml
+- type: SecurityTxt
+  url: well-known/anam-security.txt
+- type: Security
+  url: well-known/anam-security.txt
+- type: VulnerabilityDisclosure
+  url: security/anam-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/anam-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

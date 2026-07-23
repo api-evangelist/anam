@@ -1,0 +1,252 @@
+openapi: 3.1.0
+info:
+  title: Anam AI Auth Avatars API
+  version: '1.0'
+servers:
+- url: https://api.anam.ai
+  description: Anam API
+security:
+- BearerAuth: []
+tags:
+- name: Avatars
+paths:
+  /v1/avatars/{id}:
+    get:
+      summary: Get avatar by ID
+      description: Returns an avatar by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: get-avatar
+          description: Get details of a specific avatar by its ID
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: Avatar ID
+      responses:
+        '200':
+          description: Successfully retrieved avatar
+        '400':
+          description: Bad request - Invalid avatar ID
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Avatar not found
+        '500':
+          description: Server error
+      operationId: getAvatar
+      tags:
+      - Avatars
+    put:
+      summary: Update avatar
+      description: Update an avatar by ID (only display name can be updated)
+      x-mint:
+        mcp:
+          enabled: true
+          name: update-avatar
+          description: Update the display name of an existing avatar
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: Avatar ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - displayName
+              properties:
+                displayName:
+                  type: string
+                  description: New display name for the avatar
+      responses:
+        '200':
+          description: Successfully updated avatar
+        '400':
+          description: Bad request - Invalid avatar data
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Avatar not found
+        '500':
+          description: Server error
+      operationId: updateAvatar
+      tags:
+      - Avatars
+    delete:
+      summary: Delete avatar
+      description: Delete an avatar by ID
+      x-mint:
+        mcp:
+          enabled: true
+          name: delete-avatar
+          description: Delete an avatar. Use with caution as this action cannot be undone.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+        description: Avatar ID
+      responses:
+        '200':
+          description: Successfully deleted avatar
+        '400':
+          description: Bad request - Invalid avatar ID
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - Avatar not found
+        '500':
+          description: Server error
+      operationId: deleteAvatar
+      tags:
+      - Avatars
+  /v1/avatars:
+    get:
+      summary: List avatars
+      description: Returns a list of all avatars with pagination support
+      x-mint:
+        mcp:
+          enabled: true
+          name: list-avatars
+          description: Get a paginated list of all avatars with optional search and filtering
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: Page number for pagination
+      - in: query
+        name: perPage
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        description: Number of avatars per page (max 100)
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search term to filter avatars by display name
+      - in: query
+        name: onlyOneShot
+        schema:
+          type: boolean
+          default: false
+        description: Only return one-shot avatars
+      responses:
+        '200':
+          description: Successfully retrieved avatars
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        displayName:
+                          type: string
+                        variantName:
+                          type: string
+                        imageUrl:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      lastPage:
+                        type: integer
+                      currentPage:
+                        type: integer
+                      perPage:
+                        type: integer
+                      prev:
+                        type: integer
+                        nullable: true
+                      next:
+                        type: integer
+                        nullable: true
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '404':
+          description: Not Found - No avatars found
+        '500':
+          description: Server error
+      operationId: listAvatars
+      tags:
+      - Avatars
+    post:
+      summary: Create one-shot avatar
+      description: Create a new one-shot avatar from an image file or image URL. This API is only available for enterprise and pro plans.
+      x-mint:
+        mcp:
+          enabled: true
+          name: create-avatar
+          description: Create a new one-shot avatar from an image file or URL (Pro/Enterprise plans only)
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - displayName
+              properties:
+                displayName:
+                  type: string
+                  description: Display name for the avatar (3-50 characters)
+                imageFile:
+                  type: string
+                  format: binary
+                  description: Image file to create the avatar from (JPEG, PNG, or WebP, max 10MB). Either imageFile or imageUrl must be provided, but not both.
+                imageUrl:
+                  type: string
+                  format: uri
+                  description: URL of the image to create the avatar from (JPEG, PNG, or WebP, max 10MB). Either imageFile or imageUrl must be provided, but not both.
+      responses:
+        '201':
+          description: Successfully created avatar
+        '400':
+          description: Bad request - Invalid avatar data, missing image file/URL, or both provided
+        '401':
+          description: Unauthorized - Invalid or missing API key
+        '403':
+          description: Forbidden - Requires enterprise plan
+        '500':
+          description: Server error
+      operationId: createAvatar
+      tags:
+      - Avatars
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+x-mint:
+  mcp:
+    enabled: true

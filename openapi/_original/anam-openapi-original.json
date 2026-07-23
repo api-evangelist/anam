@@ -1,0 +1,2519 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Anam AI API",
+    "version": "1.0"
+  },
+  "x-mint": {
+    "mcp": {
+      "enabled": true
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.anam.ai",
+      "description": "Anam API"
+    }
+  ],
+  "paths": {
+    "/v1/auth/session-token": {
+      "post": {
+        "summary": "Create session token",
+        "description": "Create a new session token used to initialise the anam client",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-session-token",
+            "description": "Create a new session token for initializing the Anam client with a persona configuration"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clientLabel": {
+                    "type": "string",
+                    "description": "The client label for the session"
+                  },
+                  "personaConfig": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "Cara",
+                            "optional": true
+                          },
+                          "avatarId": {
+                            "type": "string",
+                            "example": "30fa96d0-26c4-4e55-94a0-517025942e18"
+                          },
+                          "voiceId": {
+                            "type": "string",
+                            "example": "6bfbe25a-979d-40f3-a92b-5394170af54b"
+                          },
+                          "brainType": {
+                            "type": "string",
+                            "enum": [
+                              "ANAM_GPT_4O_MINI_V1",
+                              "ANAM_LLAMA_v3_3_70B_V1",
+                              "CUSTOMER_CLIENT_V1"
+                            ]
+                          },
+                          "systemPrompt": {
+                            "type": "string",
+                            "example": "You are a helpful assistant"
+                          },
+                          "maxSessionLengthSeconds": {
+                            "type": "number",
+                            "example": 600,
+                            "optional": true
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "personaId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "sessionOptions": {
+                    "type": "object",
+                    "properties": {
+                      "sessionReplay": {
+                        "type": "object",
+                        "properties": {
+                          "enableSessionReplay": {
+                            "type": "boolean",
+                            "example": true,
+                            "default": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully started session"
+          },
+          "400": {
+            "description": "Invalid request body"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createSessionToken"
+      }
+    },
+    "/v1/avatars/{id}": {
+      "get": {
+        "summary": "Get avatar by ID",
+        "description": "Returns an avatar by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-avatar",
+            "description": "Get details of a specific avatar by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Avatar ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved avatar"
+          },
+          "400": {
+            "description": "Bad request - Invalid avatar ID"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Avatar not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getAvatar"
+      },
+      "put": {
+        "summary": "Update avatar",
+        "description": "Update an avatar by ID (only display name can be updated)",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-avatar",
+            "description": "Update the display name of an existing avatar"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Avatar ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["displayName"],
+                "properties": {
+                  "displayName": {
+                    "type": "string",
+                    "description": "New display name for the avatar"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated avatar"
+          },
+          "400": {
+            "description": "Bad request - Invalid avatar data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Avatar not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updateAvatar"
+      },
+      "delete": {
+        "summary": "Delete avatar",
+        "description": "Delete an avatar by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-avatar",
+            "description": "Delete an avatar. Use with caution as this action cannot be undone."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Avatar ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted avatar"
+          },
+          "400": {
+            "description": "Bad request - Invalid avatar ID"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Avatar not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deleteAvatar"
+      }
+    },
+    "/v1/avatars": {
+      "get": {
+        "summary": "List avatars",
+        "description": "Returns a list of all avatars with pagination support",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-avatars",
+            "description": "Get a paginated list of all avatars with optional search and filtering"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "description": "Number of avatars per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter avatars by display name"
+          },
+          {
+            "in": "query",
+            "name": "onlyOneShot",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Only return one-shot avatars"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved avatars",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "variantName": {
+                            "type": "string"
+                          },
+                          "imageUrl": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "lastPage": {
+                          "type": "integer"
+                        },
+                        "currentPage": {
+                          "type": "integer"
+                        },
+                        "perPage": {
+                          "type": "integer"
+                        },
+                        "prev": {
+                          "type": "integer",
+                          "nullable": true
+                        },
+                        "next": {
+                          "type": "integer",
+                          "nullable": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - No avatars found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listAvatars"
+      },
+      "post": {
+        "summary": "Create one-shot avatar",
+        "description": "Create a new one-shot avatar from an image file or image URL. This API is only available for enterprise and pro plans.",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-avatar",
+            "description": "Create a new one-shot avatar from an image file or URL (Pro/Enterprise plans only)"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["displayName"],
+                "properties": {
+                  "displayName": {
+                    "type": "string",
+                    "description": "Display name for the avatar (3-50 characters)"
+                  },
+                  "imageFile": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Image file to create the avatar from (JPEG, PNG, or WebP, max 10MB). Either imageFile or imageUrl must be provided, but not both."
+                  },
+                  "imageUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL of the image to create the avatar from (JPEG, PNG, or WebP, max 10MB). Either imageFile or imageUrl must be provided, but not both."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created avatar"
+          },
+          "400": {
+            "description": "Bad request - Invalid avatar data, missing image file/URL, or both provided"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "403": {
+            "description": "Forbidden - Requires enterprise plan"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createAvatar"
+      }
+    },
+    "/v1/knowledge/documents/{id}": {
+      "get": {
+        "summary": "Get document",
+        "description": "Get a single document by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-knowledge-document",
+            "description": "Get details of a specific knowledge base document by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved document"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Document not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getKnowledgeDocument"
+      },
+      "put": {
+        "summary": "Update document",
+        "description": "Update a document (rename)",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-knowledge-document",
+            "description": "Update a knowledge base document (rename)"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filename": {
+                    "type": "string",
+                    "description": "New filename for the document"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated document"
+          },
+          "400": {
+            "description": "Bad request - Invalid data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Document not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updateKnowledgeDocument"
+      },
+      "delete": {
+        "summary": "Delete document",
+        "description": "Delete a document from a RAG group",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-knowledge-document",
+            "description": "Delete a document from a knowledge base group. Use with caution as this cannot be undone."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted document"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Document not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deleteKnowledgeDocument"
+      }
+    },
+    "/v1/knowledge/groups/{id}/documents": {
+      "get": {
+        "summary": "List group documents",
+        "description": "Get all documents in a RAG group",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-knowledge-group-documents",
+            "description": "Get all documents in a specific knowledge base group"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved documents"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "RAG group not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listKnowledgeGroupDocuments"
+      },
+      "post": {
+        "summary": "Upload document",
+        "description": "Upload a document to a RAG group (Supports TXT, MD, DOCX, CSV up to 50MB)",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "upload-knowledge-document",
+            "description": "Upload a document to a knowledge base group (TXT, MD, DOCX, CSV up to 50MB)"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Document file (TXT, MD, DOCX, or CSV, max 50MB). PDF upload temporarily disabled."
+                  },
+                  "chunkSize": {
+                    "type": "integer",
+                    "default": 1000
+                  },
+                  "chunkOverlap": {
+                    "type": "integer",
+                    "default": 200
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully uploaded document"
+          },
+          "400": {
+            "description": "Bad request - Invalid file or parameters"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key/upload token"
+          },
+          "404": {
+            "description": "RAG group not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "uploadKnowledgeDocument"
+      }
+    },
+    "/v1/knowledge/groups/{id}": {
+      "get": {
+        "summary": "Get knowledge group",
+        "description": "Get a single RAG group by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-knowledge-group",
+            "description": "Get details of a specific knowledge base group by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved RAG group"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "RAG group not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getKnowledgeGroup"
+      },
+      "put": {
+        "summary": "Update knowledge group",
+        "description": "Update a RAG group",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-knowledge-group",
+            "description": "Update a knowledge base group's name and description"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated RAG group"
+          },
+          "400": {
+            "description": "Bad request - Invalid data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "RAG group not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updateKnowledgeGroup"
+      },
+      "delete": {
+        "summary": "Delete knowledge group",
+        "description": "Delete a RAG group",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-knowledge-group",
+            "description": "Delete a knowledge base group. Use with caution as this cannot be undone."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted RAG group"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "RAG group not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deleteKnowledgeGroup"
+      }
+    },
+    "/v1/knowledge/groups/{id}/search": {
+      "post": {
+        "summary": "Search knowledge group",
+        "description": "Search for similar content in a RAG group using vector similarity",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "search-knowledge-group",
+            "description": "Search for similar content in a knowledge base group using vector similarity"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["query"],
+                "properties": {
+                  "query": {
+                    "type": "string"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 20,
+                    "default": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved search results"
+          },
+          "400": {
+            "description": "Bad request - Invalid search query"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "RAG group not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "searchKnowledgeGroup"
+      }
+    },
+    "/v1/knowledge/groups": {
+      "get": {
+        "summary": "List knowledge groups",
+        "description": "Returns a list of all knowledge groups for the organization",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-knowledge-groups",
+            "description": "Get a list of all knowledge base groups for the organization"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved knowledge groups"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listKnowledgeGroups"
+      },
+      "post": {
+        "summary": "Create knowledge group",
+        "description": "Create a new knowledge group",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-knowledge-group",
+            "description": "Create a new knowledge base group with a name and optional description"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created knowledge group"
+          },
+          "400": {
+            "description": "Bad request - Invalid data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createKnowledgeGroup"
+      }
+    },
+    "/v1/llms/{id}": {
+      "get": {
+        "summary": "Get LLM",
+        "description": "Get a specific LLM by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-llm",
+            "description": "Get details of a specific LLM configuration by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The LLM ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved LLM"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "LLM not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getLlm"
+      },
+      "put": {
+        "summary": "Update LLM",
+        "description": "Update an LLM configuration",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-llm",
+            "description": "Update an LLM configuration (cannot update default LLMs)"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The LLM ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "llmFormat": {
+                    "type": "string",
+                    "enum": ["openai", "azure_openai", "anthropic", "custom"]
+                  },
+                  "modelName": {
+                    "type": "string"
+                  },
+                  "secret": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated LLM"
+          },
+          "400": {
+            "description": "Bad request - Invalid LLM data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "403": {
+            "description": "Forbidden - Cannot update default LLMs"
+          },
+          "404": {
+            "description": "LLM not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updateLlm"
+      },
+      "delete": {
+        "summary": "Delete LLM",
+        "description": "Delete an LLM configuration",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-llm",
+            "description": "Delete an LLM configuration (cannot delete default LLMs). Use with caution."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The LLM ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted LLM"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "403": {
+            "description": "Forbidden - Cannot delete default LLMs"
+          },
+          "404": {
+            "description": "LLM not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deleteLlm"
+      }
+    },
+    "/v1/llms": {
+      "get": {
+        "summary": "List LLMs",
+        "description": "Returns a list of all LLMs available to the organization",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-llms",
+            "description": "Get a list of all LLM configurations available to the organization with optional filtering"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of items per page"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter LLMs"
+          },
+          {
+            "in": "query",
+            "name": "includeDefaults",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Include default LLMs in the response"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved LLMs"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listLlms"
+      },
+      "post": {
+        "summary": "Create LLM",
+        "description": "Create a new LLM configuration",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-llm",
+            "description": "Create a new custom LLM configuration for the organization"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "displayName",
+                  "urls",
+                  "llmFormat",
+                  "modelName",
+                  "secret"
+                ],
+                "properties": {
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      }
+                    }
+                  },
+                  "llmFormat": {
+                    "type": "string",
+                    "enum": [
+                      "openai",
+                      "azure_openai",
+                      "gemini",
+                      "advanced_voice",
+                      "none"
+                    ]
+                  },
+                  "modelName": {
+                    "type": "string"
+                  },
+                  "secret": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created LLM"
+          },
+          "400": {
+            "description": "Bad request - Invalid LLM data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createLlm"
+      }
+    },
+    "/v1/personas/{id}": {
+      "get": {
+        "summary": "Get persona",
+        "description": "Returns a persona by id",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-persona",
+            "description": "Get details of a specific persona by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Persona id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved personas"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - No personas found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getPersona"
+      },
+      "put": {
+        "summary": "Update persona",
+        "description": "Update a persona by id",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-persona",
+            "description": "Update a persona's configuration including avatar, voice, LLM, and system prompt"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Persona id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the persona"
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Description of the persona"
+                  },
+                  "avatarId": {
+                    "type": "string",
+                    "description": "ID of the avatar to use"
+                  },
+                  "voiceId": {
+                    "type": "string",
+                    "description": "ID of the voice to use"
+                  },
+                  "llmId": {
+                    "type": "string",
+                    "description": "ID of the LLM to use"
+                  },
+                  "brainType": {
+                    "type": "string",
+                    "enum": [
+                      "ANAM_GPT_4O_MINI_V1",
+                      "ANAM_LLAMA_v3_3_70B_V1",
+                      "CUSTOMER_CLIENT_V1"
+                    ],
+                    "description": "Type of LLM to use"
+                  },
+                  "systemPrompt": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "System prompt for the LLM"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated persona"
+          },
+          "400": {
+            "description": "Bad request - Invalid persona data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "403": {
+            "description": "Forbidden - Account does not have access"
+          },
+          "404": {
+            "description": "Not Found - Persona not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updatePersona"
+      },
+      "delete": {
+        "summary": "Delete persona",
+        "description": "Delete a persona by id",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-persona",
+            "description": "Delete a persona. Use with caution as this cannot be undone."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Persona id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted persona"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "403": {
+            "description": "Forbidden - Account does not have access"
+          },
+          "404": {
+            "description": "Not Found - Persona not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deletePersona"
+      }
+    },
+    "/v1/personas": {
+      "get": {
+        "summary": "List personas",
+        "description": "Returns a list of all personas with pagination support",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-personas",
+            "description": "Get a paginated list of all personas with optional search filtering"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "description": "Number of items per page"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "filter personas by name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved personas"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listPersonas"
+      },
+      "post": {
+        "summary": "Create persona",
+        "description": "Create a new persona",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-persona",
+            "description": "Create a new persona with avatar, voice, and LLM configuration"
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created persona"
+          },
+          "400": {
+            "description": "Bad request - Invalid persona data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createPersona"
+      }
+    },
+    "/v1/sessions/{id}": {
+      "get": {
+        "summary": "Get session",
+        "description": "Returns a session by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-session",
+            "description": "Get details of a specific session by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Session ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved session"
+          },
+          "400": {
+            "description": "Bad request - Invalid session ID"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Session not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getSession"
+      }
+    },
+    "/v1/sessions": {
+      "get": {
+        "summary": "List sessions",
+        "description": "Returns a list of all sessions for the organization",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-sessions",
+            "description": "Get a paginated list of all sessions with optional filtering by API key or persona"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "description": "Number of items per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter sessions by ID or client label"
+          },
+          {
+            "in": "query",
+            "name": "apiKeyId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter sessions by API key ID"
+          },
+          {
+            "in": "query",
+            "name": "personaId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter sessions by persona ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved sessions"
+          },
+          "400": {
+            "description": "Bad request - Invalid query parameters"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listSessions"
+      }
+    },
+    "/v1/share-links/{id}": {
+      "get": {
+        "summary": "Get share link",
+        "description": "Returns a share link by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-share-link",
+            "description": "Get details of a specific share link by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Share link ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved share link"
+          },
+          "400": {
+            "description": "Bad request - Invalid share link ID"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Share link not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getShareLink"
+      },
+      "put": {
+        "summary": "Update share link",
+        "description": "Update a share link by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-share-link",
+            "description": "Update a share link's expiration time and usage limit"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Share link ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expiresInHours": {
+                    "type": "number"
+                  },
+                  "usageLimit": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated share link"
+          },
+          "400": {
+            "description": "Bad request - Invalid share link data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Share link not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updateShareLink"
+      },
+      "delete": {
+        "summary": "Delete share link",
+        "description": "Delete a share link by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-share-link",
+            "description": "Delete a share link. Use with caution as this cannot be undone."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Share link ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted share link"
+          },
+          "400": {
+            "description": "Bad request - Invalid share link ID"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Share link not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deleteShareLink"
+      }
+    },
+    "/v1/share-links": {
+      "get": {
+        "summary": "List share links",
+        "description": "Returns a list of all share links for the organization",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-share-links",
+            "description": "Get a paginated list of all share links with optional filtering"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Number of items per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter share links"
+          },
+          {
+            "in": "query",
+            "name": "personaId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter share links by persona ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved share links"
+          },
+          "400": {
+            "description": "Bad request - Invalid query parameters"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listShareLinks"
+      },
+      "post": {
+        "summary": "Create share link",
+        "description": "Create a new share link",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-share-link",
+            "description": "Create a new share link for a persona with expiration and usage limits"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["personaId"],
+                "properties": {
+                  "personaId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "expiresInHours": {
+                    "type": "number",
+                    "default": 168
+                  },
+                  "usageLimit": {
+                    "type": "number",
+                    "default": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created share link"
+          },
+          "400": {
+            "description": "Bad request - Invalid share link data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Persona not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createShareLink"
+      }
+    },
+    "/v1/tools/{id}": {
+      "get": {
+        "summary": "Get tool",
+        "description": "Get a tool by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-tool",
+            "description": "Get details of a specific tool by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Tool ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved tool"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Tool not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getTool"
+      },
+      "put": {
+        "summary": "Update tool",
+        "description": "Update a tool",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-tool",
+            "description": "Update a tool's configuration"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Tool ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated tool"
+          },
+          "400": {
+            "description": "Bad request - Invalid tool data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Tool not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updateTool"
+      },
+      "delete": {
+        "summary": "Delete tool",
+        "description": "Delete a tool",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-tool",
+            "description": "Delete a tool. Use with caution as this cannot be undone."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Tool ID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully deleted tool"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Tool not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deleteTool"
+      }
+    },
+    "/v1/tools": {
+      "get": {
+        "summary": "List tools",
+        "description": "Returns a list of all tools for the organization",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-tools",
+            "description": "Get a paginated list of all tools with optional search filtering"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "description": "Number of items per page"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "filter tools by name or description"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved tools"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listTools"
+      },
+      "post": {
+        "summary": "Create tool",
+        "description": "Create a new tool",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-tool",
+            "description": "Create a new tool for the organization"
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created tool"
+          },
+          "400": {
+            "description": "Bad request - Invalid tool data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createTool"
+      }
+    },
+    "/v1/voices/{id}": {
+      "get": {
+        "summary": "Get voice",
+        "description": "Returns a voice by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "get-voice",
+            "description": "Get details of a specific voice by its ID"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Voice ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved voice",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "type": "string"
+                    },
+                    "providerVoiceId": {
+                      "type": "string"
+                    },
+                    "providerModelId": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "sampleUrl": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "gender": {
+                      "type": "string",
+                      "enum": ["male", "female", "neutral"],
+                      "nullable": true
+                    },
+                    "country": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "ISO 3166-1 alpha-2 country code"
+                    },
+                    "description": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    },
+                    "createdByOrganizationId": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid voice ID"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Voice not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "getVoice"
+      },
+      "put": {
+        "summary": "Update voice",
+        "description": "Update a voice by ID (display name and provider model ID can be updated)",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "update-voice",
+            "description": "Update a voice's display name, provider model ID, gender, country, and description"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Voice ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["displayName"],
+                "properties": {
+                  "displayName": {
+                    "type": "string",
+                    "description": "New display name for the voice"
+                  },
+                  "providerModelId": {
+                    "type": "string",
+                    "description": "New provider model ID for the voice (e.g. sonic-3 for Cartesia, eleven_turbo_v2_5 for ElevenLabs)",
+                    "example": "sonic-3"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "enum": ["male", "female", "neutral"],
+                    "nullable": true,
+                    "description": "Voice gender"
+                  },
+                  "country": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "ISO 3166-1 alpha-2 country code"
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "Voice description"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated voice"
+          },
+          "400": {
+            "description": "Bad request - Invalid voice data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Voice not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "updateVoice"
+      },
+      "delete": {
+        "summary": "Delete voice",
+        "description": "Delete a voice by ID",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "delete-voice",
+            "description": "Delete a voice. Use with caution as this cannot be undone."
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "Voice ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted voice"
+          },
+          "400": {
+            "description": "Bad request - Invalid voice ID"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "404": {
+            "description": "Not Found - Voice not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "deleteVoice"
+      }
+    },
+    "/v1/voices": {
+      "get": {
+        "summary": "List voices",
+        "description": "Returns a list of all voices with pagination support",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "list-voices",
+            "description": "Get a paginated list of all voices with optional search filtering"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10
+            },
+            "description": "Number of voices per page (max 100)"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter voices by display name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved voices",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "provider": {
+                            "type": "string"
+                          },
+                          "providerVoiceId": {
+                            "type": "string"
+                          },
+                          "providerModelId": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "sampleUrl": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "gender": {
+                            "type": "string",
+                            "enum": ["male", "female", "neutral"],
+                            "nullable": true
+                          },
+                          "country": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "ISO 3166-1 alpha-2 country code"
+                          },
+                          "description": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "lastPage": {
+                          "type": "integer"
+                        },
+                        "currentPage": {
+                          "type": "integer"
+                        },
+                        "perPage": {
+                          "type": "integer"
+                        },
+                        "prev": {
+                          "type": "integer",
+                          "nullable": true
+                        },
+                        "next": {
+                          "type": "integer",
+                          "nullable": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "403": {
+            "description": "Forbidden - Account does not have access"
+          },
+          "404": {
+            "description": "Not Found - No voices found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "listVoices"
+      },
+      "post": {
+        "summary": "Create voice",
+        "description": "Create a new voice by cloning from an audio file",
+        "x-mint": {
+          "mcp": {
+            "enabled": true,
+            "name": "create-voice",
+            "description": "Create a new voice by cloning from an audio file (Enterprise plans only)"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "audioFile"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Display name for the cloned voice"
+                  },
+                  "audioFile": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Audio file to clone the voice from"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Optional description of the voice"
+                  },
+                  "language": {
+                    "type": "string",
+                    "default": "en",
+                    "description": "Language code for the voice"
+                  },
+                  "enhance": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to enhance the voice quality"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created voice clone"
+          },
+          "400": {
+            "description": "Bad request - Invalid voice data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing API key"
+          },
+          "403": {
+            "description": "Forbidden - Requires enterprise plan"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "operationId": "createVoice"
+      }
+    }
+  },
+  "tags": []
+}

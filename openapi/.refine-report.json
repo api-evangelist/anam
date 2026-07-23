@@ -1,0 +1,30 @@
+{
+  "provider": "anam",
+  "sources": [
+    "anam-auth-api-openapi.yml",
+    "anam-avatars-api-openapi.yml",
+    "anam-knowledge-api-openapi.yml",
+    "anam-llms-api-openapi.yml",
+    "anam-personas-api-openapi.yml",
+    "anam-sessions-api-openapi.yml",
+    "anam-share-links-api-openapi.yml",
+    "anam-tools-api-openapi.yml",
+    "anam-voices-api-openapi.yml"
+  ],
+  "outputs": [
+    "anam-auth-api-openapi.yml",
+    "anam-avatars-api-openapi.yml",
+    "anam-knowledge-api-openapi.yml",
+    "anam-llms-api-openapi.yml",
+    "anam-personas-api-openapi.yml",
+    "anam-sessions-api-openapi.yml",
+    "anam-share-links-api-openapi.yml",
+    "anam-tools-api-openapi.yml",
+    "anam-voices-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
