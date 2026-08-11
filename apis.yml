@@ -243,7 +243,7 @@ common:
 - type: Compliance
   url: https://trust.anam.ai/
 - type: OpenAPI
-  url: openapi/anam-openapi-original.json
+  url: openapi/_original/anam-openapi-original.json
 - type: LLMsTxt
   url: llms/anam-llms.txt
 - type: Packages
