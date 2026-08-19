@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Personas API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Personas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get persona",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/personas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Persona id"
+              }
+            ]
+          },
+          "docs": "Returns a persona by id"
+        },
+        {
+          "info": {
+            "name": "Update persona",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/personas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Persona id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a persona by id"
+        },
+        {
+          "info": {
+            "name": "Delete persona",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/personas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Persona id"
+              }
+            ]
+          },
+          "docs": "Delete a persona by id"
+        },
+        {
+          "info": {
+            "name": "List personas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/personas",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "filter personas by name"
+              }
+            ]
+          },
+          "docs": "Returns a list of all personas with pagination support"
+        },
+        {
+          "info": {
+            "name": "Create persona",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/personas"
+          },
+          "docs": "Create a new persona"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

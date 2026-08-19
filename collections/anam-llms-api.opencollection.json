@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Llms API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Llms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get LLM",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/llms/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The LLM ID"
+              }
+            ]
+          },
+          "docs": "Get a specific LLM by ID"
+        },
+        {
+          "info": {
+            "name": "Update LLM",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/llms/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The LLM ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an LLM configuration"
+        },
+        {
+          "info": {
+            "name": "Delete LLM",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/llms/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The LLM ID"
+              }
+            ]
+          },
+          "docs": "Delete an LLM configuration"
+        },
+        {
+          "info": {
+            "name": "List LLMs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/llms",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter LLMs"
+              },
+              {
+                "name": "includeDefaults",
+                "value": "",
+                "type": "query",
+                "description": "Include default LLMs in the response"
+              }
+            ]
+          },
+          "docs": "Returns a list of all LLMs available to the organization"
+        },
+        {
+          "info": {
+            "name": "Create LLM",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/llms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new LLM configuration"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

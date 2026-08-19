@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Sessions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/sessions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Session ID"
+              }
+            ]
+          },
+          "docs": "Returns a session by ID"
+        },
+        {
+          "info": {
+            "name": "List sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/sessions",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter sessions by ID or client label"
+              },
+              {
+                "name": "apiKeyId",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions by API key ID"
+              },
+              {
+                "name": "personaId",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions by persona ID"
+              }
+            ]
+          },
+          "docs": "Returns a list of all sessions for the organization"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

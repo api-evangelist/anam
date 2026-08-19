@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Share Links API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Share Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get share link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/share-links/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Share link ID"
+              }
+            ]
+          },
+          "docs": "Returns a share link by ID"
+        },
+        {
+          "info": {
+            "name": "Update share link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/share-links/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Share link ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a share link by ID"
+        },
+        {
+          "info": {
+            "name": "Delete share link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/share-links/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Share link ID"
+              }
+            ]
+          },
+          "docs": "Delete a share link by ID"
+        },
+        {
+          "info": {
+            "name": "List share links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/share-links",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page (max 100)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter share links"
+              },
+              {
+                "name": "personaId",
+                "value": "",
+                "type": "query",
+                "description": "Filter share links by persona ID"
+              }
+            ]
+          },
+          "docs": "Returns a list of all share links for the organization"
+        },
+        {
+          "info": {
+            "name": "Create share link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/share-links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new share link"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

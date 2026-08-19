@@ -1,0 +1,244 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Knowledge API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Knowledge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/knowledge/documents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a single document by ID"
+        },
+        {
+          "info": {
+            "name": "Update document",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/knowledge/documents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a document (rename)"
+        },
+        {
+          "info": {
+            "name": "Delete document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/knowledge/documents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a document from a RAG group"
+        },
+        {
+          "info": {
+            "name": "List group documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/knowledge/groups/:id/documents",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all documents in a RAG group"
+        },
+        {
+          "info": {
+            "name": "Upload document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/knowledge/groups/:id/documents",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "chunkSize",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "chunkOverlap",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a document to a RAG group (Supports TXT, MD, DOCX, CSV up to 50MB)"
+        },
+        {
+          "info": {
+            "name": "Get knowledge group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/knowledge/groups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a single RAG group by ID"
+        },
+        {
+          "info": {
+            "name": "Update knowledge group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/knowledge/groups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a RAG group"
+        },
+        {
+          "info": {
+            "name": "Delete knowledge group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/knowledge/groups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a RAG group"
+        },
+        {
+          "info": {
+            "name": "Search knowledge group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/knowledge/groups/:id/search",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for similar content in a RAG group using vector similarity"
+        },
+        {
+          "info": {
+            "name": "List knowledge groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/knowledge/groups"
+          },
+          "docs": "Returns a list of all knowledge groups for the organization"
+        },
+        {
+          "info": {
+            "name": "Create knowledge group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/knowledge/groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new knowledge group"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

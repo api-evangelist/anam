@@ -1,0 +1,283 @@
+{
+  "item": [
+    {
+      "id": "f623d9d5-4749-4a13-8533-033d790fe652",
+      "name": "Auth",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6bbdfca4-23ff-4a8c-bd4e-04dafa48dc63",
+          "name": "Create session token",
+          "request": {
+            "name": "Create session token",
+            "description": {
+              "content": "Create a new session token used to initialise the anam client",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "auth",
+                "session-token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientLabel\": \"<string>\",\n  \"personaConfig\": {\n    \"name\": \"<string>\",\n    \"avatarId\": \"<string>\",\n    \"voiceId\": \"<string>\",\n    \"brainType\": \"<string>\",\n    \"systemPrompt\": \"<string>\",\n    \"maxSessionLengthSeconds\": \"<number>\"\n  },\n  \"sessionOptions\": {\n    \"sessionReplay\": {\n      \"enableSessionReplay\": true\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb03bfd8-16e5-4e47-bfbd-013262fb8037",
+              "name": "Successfully started session",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth",
+                    "session-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientLabel\": \"<string>\",\n  \"personaConfig\": {\n    \"name\": \"Cara\",\n    \"avatarId\": \"30fa96d0-26c4-4e55-94a0-517025942e18\",\n    \"voiceId\": \"6bfbe25a-979d-40f3-a92b-5394170af54b\",\n    \"brainType\": \"<string>\",\n    \"systemPrompt\": \"You are a helpful assistant\",\n    \"maxSessionLengthSeconds\": 600\n  },\n  \"sessionOptions\": {\n    \"sessionReplay\": {\n      \"enableSessionReplay\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "70e63cce-655b-412d-a154-69369e53f9fc",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth",
+                    "session-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientLabel\": \"<string>\",\n  \"personaConfig\": {\n    \"name\": \"Cara\",\n    \"avatarId\": \"30fa96d0-26c4-4e55-94a0-517025942e18\",\n    \"voiceId\": \"6bfbe25a-979d-40f3-a92b-5394170af54b\",\n    \"brainType\": \"<string>\",\n    \"systemPrompt\": \"You are a helpful assistant\",\n    \"maxSessionLengthSeconds\": 600\n  },\n  \"sessionOptions\": {\n    \"sessionReplay\": {\n      \"enableSessionReplay\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f7cffa79-bf1c-4671-9938-397430dc0a57",
+              "name": "Unauthorized - Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth",
+                    "session-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientLabel\": \"<string>\",\n  \"personaConfig\": {\n    \"name\": \"Cara\",\n    \"avatarId\": \"30fa96d0-26c4-4e55-94a0-517025942e18\",\n    \"voiceId\": \"6bfbe25a-979d-40f3-a92b-5394170af54b\",\n    \"brainType\": \"<string>\",\n    \"systemPrompt\": \"You are a helpful assistant\",\n    \"maxSessionLengthSeconds\": 600\n  },\n  \"sessionOptions\": {\n    \"sessionReplay\": {\n      \"enableSessionReplay\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e04deb77-fa80-4048-b14c-2144bf3c0973",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "auth",
+                    "session-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientLabel\": \"<string>\",\n  \"personaConfig\": {\n    \"name\": \"Cara\",\n    \"avatarId\": \"30fa96d0-26c4-4e55-94a0-517025942e18\",\n    \"voiceId\": \"6bfbe25a-979d-40f3-a92b-5394170af54b\",\n    \"brainType\": \"<string>\",\n    \"systemPrompt\": \"You are a helpful assistant\",\n    \"maxSessionLengthSeconds\": 600\n  },\n  \"sessionOptions\": {\n    \"sessionReplay\": {\n      \"enableSessionReplay\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.anam.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5c5db0d5-3147-48a3-9c07-6828bafd3ba6",
+    "name": "Anam AI Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

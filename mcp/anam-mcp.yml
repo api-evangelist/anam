@@ -141,3 +141,9 @@ tools:
 - name: createVoice
   description: Create voice
   source_operation: openapi/anam-openapi-original.json#createVoice
+deployment:
+  mode: none
+  verified: derived
+  tools: 44
+  checked: '2026-08-12'
+  source: catalog MCP census

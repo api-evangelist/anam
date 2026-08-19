@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Tools API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/tools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Tool ID"
+              }
+            ]
+          },
+          "docs": "Get a tool by ID"
+        },
+        {
+          "info": {
+            "name": "Update tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/tools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Tool ID"
+              }
+            ]
+          },
+          "docs": "Update a tool"
+        },
+        {
+          "info": {
+            "name": "Delete tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/tools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Tool ID"
+              }
+            ]
+          },
+          "docs": "Delete a tool"
+        },
+        {
+          "info": {
+            "name": "List tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/tools",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "filter tools by name or description"
+              }
+            ]
+          },
+          "docs": "Returns a list of all tools for the organization"
+        },
+        {
+          "info": {
+            "name": "Create tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/tools"
+          },
+          "docs": "Create a new tool"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

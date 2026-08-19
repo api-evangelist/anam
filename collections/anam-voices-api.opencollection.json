@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Voices API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Voices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/voices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Voice ID"
+              }
+            ]
+          },
+          "docs": "Returns a voice by ID"
+        },
+        {
+          "info": {
+            "name": "Update voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/voices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Voice ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a voice by ID (display name and provider model ID can be updated)"
+        },
+        {
+          "info": {
+            "name": "Delete voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/voices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Voice ID"
+              }
+            ]
+          },
+          "docs": "Delete a voice by ID"
+        },
+        {
+          "info": {
+            "name": "List voices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/voices",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Number of voices per page (max 100)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter voices by display name"
+              }
+            ]
+          },
+          "docs": "Returns a list of all voices with pagination support"
+        },
+        {
+          "info": {
+            "name": "Create voice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/voices",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "name",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "audioFile",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "description",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "language",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "enhance",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new voice by cloning from an audio file"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

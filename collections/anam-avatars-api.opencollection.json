@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anam AI Auth Avatars API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Avatars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get avatar by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/avatars/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Avatar ID"
+              }
+            ]
+          },
+          "docs": "Returns an avatar by ID"
+        },
+        {
+          "info": {
+            "name": "Update avatar",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.anam.ai/v1/avatars/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Avatar ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an avatar by ID (only display name can be updated)"
+        },
+        {
+          "info": {
+            "name": "Delete avatar",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.anam.ai/v1/avatars/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Avatar ID"
+              }
+            ]
+          },
+          "docs": "Delete an avatar by ID"
+        },
+        {
+          "info": {
+            "name": "List avatars",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.anam.ai/v1/avatars",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              },
+              {
+                "name": "perPage",
+                "value": "",
+                "type": "query",
+                "description": "Number of avatars per page (max 100)"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter avatars by display name"
+              },
+              {
+                "name": "onlyOneShot",
+                "value": "",
+                "type": "query",
+                "description": "Only return one-shot avatars"
+              }
+            ]
+          },
+          "docs": "Returns a list of all avatars with pagination support"
+        },
+        {
+          "info": {
+            "name": "Create one-shot avatar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.anam.ai/v1/avatars",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "displayName",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "imageFile",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "imageUrl",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Create a new one-shot avatar from an image file or image URL. This API is only available for enterprise and pro plans."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
