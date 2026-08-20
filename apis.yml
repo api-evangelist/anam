@@ -33,6 +33,15 @@ created: '2026-07-17'
 modified: '2026-07-17'
 tags:
 - Company
+- Artificial Intelligence
+- Avatars
+- Conversational AI
+- Video
+- Real-Time
+- Voice
+- Agents
+tags_raw:
+- Company
 - Ai
 - Avatars
 - Conversational AI
@@ -48,6 +57,8 @@ apis:
   humanURL: https://anam.ai/docs/api-reference/overview
   baseURL: https://api.anam.ai/v1
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -102,6 +113,8 @@ apis:
   humanURL: https://anam.ai/docs/api-reference/overview
   baseURL: https://api.anam.ai/v1
   tags:
+  - LLMs
+  tags_raw:
   - Llms
   properties:
   - type: OpenAPI
