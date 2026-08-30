@@ -125,7 +125,7 @@ apis:
   humanURL: https://anam.ai/docs/api-reference/overview
   baseURL: https://api.anam.ai/v1
   tags:
-  - LLMs
+  - Llms
   tags_raw:
   - Llms
   properties:
