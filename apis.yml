@@ -120,26 +120,6 @@ apis:
     url: https://anam.ai/docs/api-reference/overview
   - type: GettingStarted
     url: https://anam.ai/docs/quickstart
-- aid: anam:anam-llms-api
-  name: Anam Llms API
-  description: The Llms API from Anam — 2 operation(s) for llms.
-  humanURL: https://anam.ai/docs/api-reference/overview
-  baseURL: https://api.anam.ai/v1
-  tags:
-  - LLMs
-  tags_raw:
-  - Llms
-  properties:
-  - type: OpenAPI
-    url: openapi/anam-llms-api-openapi.yml
-  - type: LLMsTxt
-    url: llms/anam-llms.txt
-  - type: Documentation
-    url: https://anam.ai/docs
-  - type: APIReference
-    url: https://anam.ai/docs/api-reference/overview
-  - type: GettingStarted
-    url: https://anam.ai/docs/quickstart
 - aid: anam:anam-personas-api
   name: Anam Personas API
   description: The Personas API from Anam — 2 operation(s) for personas.
@@ -222,6 +202,24 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/anam-voices-api-openapi.yml
+  - type: LLMsTxt
+    url: llms/anam-llms.txt
+  - type: Documentation
+    url: https://anam.ai/docs
+  - type: APIReference
+    url: https://anam.ai/docs/api-reference/overview
+  - type: GettingStarted
+    url: https://anam.ai/docs/quickstart
+- aid: anam:anam-llms-api
+  name: Anam Llms API
+  description: The Llms API from Anam — 2 operation(s) for llms.
+  humanURL: https://anam.ai/docs/api-reference/overview
+  baseURL: https://api.anam.ai/v1
+  tags:
+  - Llms
+  properties:
+  - type: OpenAPI
+    url: openapi/anam-llms-api-openapi.yml
   - type: LLMsTxt
     url: llms/anam-llms.txt
   - type: Documentation
