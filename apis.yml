@@ -198,6 +198,8 @@ apis:
   humanURL: https://anam.ai/docs/api-reference/overview
   baseURL: https://api.anam.ai/v1
   tags:
+  - Voice
+  tags_raw:
   - Voices
   properties:
   - type: OpenAPI
@@ -216,6 +218,8 @@ apis:
   humanURL: https://anam.ai/docs/api-reference/overview
   baseURL: https://api.anam.ai/v1
   tags:
+  - LLM
+  tags_raw:
   - Llms
   properties:
   - type: OpenAPI

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Anam AI Auth Llms API
+  title: Anam AI Llms API
   version: '1.0'
 servers:
 - url: https://api.anam.ai
@@ -8,7 +8,7 @@ servers:
 security:
 - BearerAuth: []
 tags:
-- name: Llms
+- name: LLMs
 paths:
   /v1/llms/{id}:
     get:
@@ -37,7 +37,7 @@ paths:
           description: Server error
       operationId: getLlm
       tags:
-      - Llms
+      - LLMs
     put:
       summary: Update LLM
       description: Update an LLM configuration
@@ -94,7 +94,7 @@ paths:
           description: Server error
       operationId: updateLlm
       tags:
-      - Llms
+      - LLMs
     delete:
       summary: Delete LLM
       description: Delete an LLM configuration
@@ -123,7 +123,7 @@ paths:
           description: Server error
       operationId: deleteLlm
       tags:
-      - Llms
+      - LLMs
   /v1/llms:
     get:
       summary: List LLMs
@@ -163,7 +163,7 @@ paths:
           description: Server error
       operationId: listLlms
       tags:
-      - Llms
+      - LLMs
     post:
       summary: Create LLM
       description: Create a new LLM configuration
@@ -222,7 +222,7 @@ paths:
           description: Server error
       operationId: createLlm
       tags:
-      - Llms
+      - LLMs
 components:
   securitySchemes:
     BearerAuth:
